@@ -1,0 +1,31 @@
+﻿ISSUES:
+
+line, column
+https://docs.microsoft.com/en-us/visualstudio/extensibility/walkthrough-creating-a-view-adornment-commands-and-settings-column-guides?view=vs-2022
+
+Getting results to grid
+
+IDEAS:
+
+https://www.codeproject.com/articles/1073839/create-sql-server-management-studio-addin
+Hints on getting into the object explorer
+
+https://stackoverflow.com/questions/15080185/ssms-extensibility-project-howto-research-debug
+
+https://github.com/alex-bochkov/ssms-addin/blob/master/Addin.SSMS2008/MainClass.vb
+
+https://m.tsingfun.com/it/cpp/478.html
+
+INTERFACING .NET Standard 2.0
+Visual Studio forces the binding redirect on assemblies in:
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Preview\Common7\IDE\devenv.exe.config
+
+So when you try to load a reference that is restricted by these binding redirects
+or one that is dependent on an older DLL, the extension will fail.
+This appears to be why using System.Text.Json is restricted, also
+System.Threading.Tasks.Extensions is locked to 4.2.0.1
+and
+System.Runtime.CompilerServices.Unsafe is locked to 5.0.0.0
+https://blog.slaks.net/2014-02-21/extending-visual-studio-part-3-assembly-versioning/#:~:text=In%20order%20to%20make%20ordinary%20Visual%20Studio%20extensions,correct%20version%20for%20the%20installed%20copy%20of%20VS.
+
+

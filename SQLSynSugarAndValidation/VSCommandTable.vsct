@@ -1,0 +1,95 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<CommandTable xmlns="http://schemas.microsoft.com/VisualStudio/2005-10-18/CommandTable" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+	<Extern href="stdidcmd.h"/>
+	<Extern href="vsshlids.h"/>
+	<!-- 
+	See C:\programs\vs2019\VSExt\CSVPaste\packages\Microsoft.VSSDK.BuildTools.14.3.25407\tools\vssdk\inc
+	-->
+	<Include href="KnownImageIds.vsct"/>
+	<Include href="VSGlobals.vsct"/>
+
+	<Commands package="SQLSynSugarAndValidation">
+
+	<Groups>
+		<Group guid="SQLSynSugarAndValidation" id="MyMenuGroup" priority="0x600">
+			<Parent guid="guidSHLMainMenu" id="IDM_VS_MENU_TOOLS"/>
+		</Group>
+	</Groups>
+
+	<!--
+	<Menus>
+	</Menus>
+	 -->
+
+	<!--This section defines the elements the user can interact with, like a menu command or a button
+		or combo box in a toolbar. -->
+	<Buttons>
+
+		<!-- not working likely command requires menu -->
+		<Button guid="SQLSynSugarAndValidation" id="ExecuteStatementCommand"
+			priority="0x0108"
+			type="Button">
+			<!-- <Parent guid="SQLSynSugarAndValidation" id="MyPasteMenuGroup"/> -->
+			<Parent guid="SQLSynSugarAndValidation" id="MyMenuGroup"/>
+			<Icon guid="ImageCatalogGuid" id="RunQuery"/>
+			<CommandFlag>IconIsMoniker</CommandFlag>
+			<Strings>
+				<ButtonText>Execute Statement</ButtonText>
+				<LocCanonicalName>.SQLSynSugarAndValidation.ExecuteStatementCommand</LocCanonicalName>
+			</Strings>
+		</Button>
+
+		<!-- IDM_VS_MENU_TOOLS IDG_VS_TOOLS_EXT_TOOLS -->
+		<Button guid="SQLSynSugarAndValidation" id="ToolWindowCommand"
+			priority="0x0109"
+			type="Button">
+			<Parent guid="guidSHLMainMenu" id="IDG_VS_TOOLS_EXT_TOOLS" />
+			<Icon guid="ImageCatalogGuid" id="ToolWindow" />
+			<CommandFlag>IconIsMoniker</CommandFlag>
+			<Strings>
+				<ButtonText>Statement Details Window</ButtonText>
+				<LocCanonicalName>.SQLSynSugarAndValidation.ToolWindow</LocCanonicalName>
+			</Strings>
+		</Button>
+
+
+	</Buttons>
+
+</Commands>
+
+<!--
+<KeyBindings>
+</KeyBindings>
+-->
+
+<!--
+  <VisibilityConstraints>
+  </VisibilityConstraints>
+-->
+
+	<CommandPlacements>
+		<!-- Failed IDG_VS_TOOLS_OTHER2 -->
+		<!-- IDG_VS_VIEW_WINDOWS gets View menu but not Other Windows-->
+		<!-- Try IDG_VS_VIEW_DEV_WINDOWS -->
+		<CommandPlacement
+			guid="SQLSynSugarAndValidation"
+			id="ToolWindowCommand"
+			priority="0x8000">
+			<Parent guid="guidSHLMainMenu" id="IDG_VS_VIEW_WINDOWS"/>
+		</CommandPlacement>
+	</CommandPlacements>
+
+<Symbols>
+	<GuidSymbol name="SQLSynSugarAndValidation" value="{c5c49737-d82b-44da-819c-1763b651e9ba}">
+		<IDSymbol name="MyMenuGroup" value="0x0001"/>
+		<IDSymbol name="MyToolWindow" value="0x0002"/>
+
+		<IDSymbol name="ExecuteStatementCommand" value="0x0104"/>
+		<IDSymbol name="ToolWindowCommand" value="0x0105"/>
+
+		<IDSymbol name="IntellisenseCommand" value="0x0106"/>
+	</GuidSymbol>
+</Symbols>
+
+</CommandTable>

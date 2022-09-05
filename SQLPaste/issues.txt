@@ -1,0 +1,13 @@
+﻿ISSUES:
+Still checking buffer size is exact
+
+It seems of you create the results grid with select top 1000 from, it defaults
+to including column headings
+
+Paste as Values defaults to Horizontal, but large multi-column paste 
+"D:\programs\TSQL\ExcelSingleColumnValuesPaste.txt"
+only makes SENSE vertical.
+
+IDEAS:
+
+What about a DISTINCT paste?

@@ -1,0 +1,99 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<CommandTable xmlns="http://schemas.microsoft.com/VisualStudio/2005-10-18/CommandTable" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+	<Extern href="stdidcmd.h"/>
+	<Extern href="vsshlids.h"/>
+	<!-- 
+	See C:\programs\vs2019\VSExt\CSVPaste\packages\Microsoft.VSSDK.BuildTools.14.3.25407\tools\vssdk\inc
+	-->
+	<Include href="KnownImageIds.vsct"/>
+	<Include href="VSGlobals.vsct"/>
+
+<Commands package="SSMSVSUtils">
+
+
+	<Groups>
+		<Group guid="SSMSVSUtils" id="MyMenuGroup" priority="0x600">
+			<Parent guid="guidSHLMainMenu" id="IDM_VS_MENU_TOOLS"/>
+		</Group>
+	</Groups>
+
+	<!--
+	<Menus>
+	</Menus>
+	 -->
+
+	<!--This section defines the elements the user can interact with, like a menu command or a button
+		or combo box in a toolbar. -->
+	<Buttons>
+
+		<Button guid="SSMSVSUtils" id="HardLineDownCommand"
+			priority="0x0107"
+			type="Button">
+			<!-- <Parent guid="SSMSVSUtils" id="MyPasteMenuGroup"/> -->
+			<Strings>
+				<ButtonText>Hard Line Down</ButtonText>
+				<LocCanonicalName>.SSMSVSUtils.HardLineDownCommand</LocCanonicalName>
+			</Strings>
+		</Button>
+
+		<Button guid="SSMSVSUtils" id="SomeTestCommand"
+			priority="0x0109"
+			type="Button">
+			<!-- <Parent guid="SSMSVSUtils" id="MyEditFlyoutMenuGroup"/> -->
+			<Parent guid="SSMSVSUtils" id="MyMenuGroup"/>
+			<Icon guid="ImageCatalogGuid" id="Battery" />
+			<CommandFlag>IconIsMoniker</CommandFlag>
+			<Strings>
+				<ButtonText>Some Test Command</ButtonText>
+				<LocCanonicalName>.SSMSVSUtils.SomeTestCommand</LocCanonicalName>
+			</Strings>
+		</Button>
+
+	</Buttons>
+
+</Commands>
+
+<KeyBindings>
+	<!-- Control Alt Shift Cursor Down works -->
+	<!-- Shift Alt Page Down-->
+	<!-- NOT WORKING:-->
+	<!-- Control VK_DOWN; Control Shift VK_DOWN; Shift Alt VK-DOWN -->
+	<!-- Alt VK_DOWN; Alt VK_NEXT; Control Alt VK_NEXT -->
+	<!-- key1 VK_LWIN key2 VK_DOWN -->
+	<!-- Shift Alt PAGE DOWN for Hard Line Down-->
+	<KeyBinding
+		guid="SSMSVSUtils"
+		id="HardLineDownCommand"
+		editor="guidVSStd97"
+		key1="VK_NEXT"
+		mod1="Shift Alt"
+		/>
+</KeyBindings>
+
+<!--
+  <VisibilityConstraints>
+  </VisibilityConstraints>
+-->
+
+	<!-- CommandPlacements -->
+
+<!--
+		<CommandPlacement
+		</CommandPlacement>
+-->
+
+	<!-- /CommandPlacements -->
+
+<Symbols>
+	<GuidSymbol name="SSMSVSUtils" value="{d298403f-60cc-469c-8346-4d7fa4ee9ab4}">
+		<IDSymbol name="MyMenuGroup" value="0x0001"/>
+		<IDSymbol name="MyToolWindow" value="0x0002"/>
+
+		<IDSymbol name="HardLineDownCommand" value="0x0103"/>
+
+		<IDSymbol name="SomeTestCommand" value ="0x0107"/>
+	</GuidSymbol>
+</Symbols>
+
+</CommandTable>

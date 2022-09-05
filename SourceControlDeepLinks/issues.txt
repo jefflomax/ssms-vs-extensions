@@ -1,0 +1,8 @@
+﻿ISSUES:
+
+BB Link should check filename exists, preferably saved.
+Handle not in git repo
+No clean modern way to find ASPX file
+
+IDEAS:
+Slack Integration
