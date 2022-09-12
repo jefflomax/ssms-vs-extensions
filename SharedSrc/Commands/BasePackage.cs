@@ -84,7 +84,9 @@ namespace SharedSrc.Commands
 		protected async Task GetOptionsFromVSSettingsAsync()
 		{
 			// read settings
+			_state.SetPackage( this );
 			var options = await GetLiveSettingsInstanceAsync();
+			options.SetPackage( this );
 			_state = options;
 		}
 

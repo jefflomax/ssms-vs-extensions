@@ -4,11 +4,22 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using SharedSrc.Helpers;
+using SourceControlDeepLinks.Options;
 
 namespace SourceControlDeepLinks.Helpers
 {
 	public static class BitbucketHelper
 	{
+		public static ProviderInfo GetDefault( AppSettingsHelper appSettingsHelper )
+		{
+			var domain = appSettingsHelper.GetString( "BitbucketDomain" );
+			var scm = appSettingsHelper.GetString( "SCM" );
+			var baseUrl = appSettingsHelper.GetString( "BitbucketBase" );
+			var pi = new ProviderInfo();
+			pi.Set( domain, baseUrl, scm, "", false );
+			return pi;
+		}
+
 		public static (string deepLink, string pathInRepo) GetBitbucketDeepLink
 		(
 			string remoteRepoUrl,

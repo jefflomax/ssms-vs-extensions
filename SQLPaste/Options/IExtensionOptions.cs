@@ -1,10 +1,10 @@
 ﻿namespace SharedSrc.Interfaces
 {
-	public interface IExtensionOptions
+	public interface IExtensionOptions : IBaseExtensionOptions
 	{
 		bool DiagnosticOutput { get; set; }
 		bool CSVPasteDirection { get; set; }
-		public bool ValuesPasteDirection { get; set; }
-		public bool AlwaysQuoteIntegers { get; set; }
+		bool ValuesPasteDirection { get; set; }
+		bool AlwaysQuoteIntegers { get; set; }
 	}
 }

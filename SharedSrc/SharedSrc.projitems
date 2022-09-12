@@ -20,6 +20,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\Experiments.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\ProcessHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\RegistryHelper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Interfaces\IBaseExtensionOptions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Interfaces\IBasePackage.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Interfaces\ICommandShared.cs" />
   </ItemGroup>

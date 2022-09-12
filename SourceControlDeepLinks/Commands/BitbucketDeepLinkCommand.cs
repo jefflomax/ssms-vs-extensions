@@ -125,20 +125,46 @@ namespace SourceControlDeepLinks.Commands
 			var git = state.GitExecutable;
 			var gitHelper = new GitHelper( git, state.BypassGit );
 
+			var provider = state.Provider;
+
 			var repoRoot = await gitHelper.GetRepositoryRootAsync( workingDirectory );
 			var remoteOrigin = await gitHelper.GetRemoteOriginUrlAsync( workingDirectory );
+			var currentBranch = await gitHelper.GetCurrentBranchAsync( workingDirectory );
 
 			var appSettingsHelper = new AppSettingsHelper(Package);
 
 			var bookmarkedLines = e.InValue as string;
-			var (bbDeepLink, pathInRepo) = BitbucketHelper.GetBitbucketDeepLink
+			var providerHelper = new ProviderHelper( package );
+			var deepLink = providerHelper.GetDeepLink
 			(
+				provider,
+				state.GetProviderInfoFromForm(),
 				remoteOrigin,
 				repoRoot,
 				activeFilePath,
 				bookmarkedLines,
-				appSettingsHelper
+				currentBranch
 			);
+
+			string bbDeepLink;
+			string pathInRepo;
+			if( deepLink != null )
+			{
+				bbDeepLink = deepLink.DeepLink;
+				pathInRepo = deepLink.PathInRepo;
+			}
+			else
+			{
+				// TODO: Migrate BB to ExtensionOptions
+				(bbDeepLink, pathInRepo) = BitbucketHelper.GetBitbucketDeepLink
+				(
+					remoteOrigin,
+					repoRoot,
+					activeFilePath,
+					bookmarkedLines,
+					appSettingsHelper
+				);
+			}
 
 			if (state.DiagnosticOutput)
 			{

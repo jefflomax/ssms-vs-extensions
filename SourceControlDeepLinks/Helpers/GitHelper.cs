@@ -11,10 +11,12 @@ namespace SourceControlDeepLinks.Helpers
 	{
 		private readonly string _pathToGit;
 		private readonly bool _bypassGit;
+		private DirectoryInfo _gitFolder;
 		public GitHelper(string pathToGit, bool bypassGit)
 		{
 			_pathToGit = pathToGit;
 			_bypassGit = bypassGit;
+			_gitFolder = null;
 		}
 
 		public async Task<string> GetRepositoryRootAsync
@@ -90,6 +92,43 @@ namespace SourceControlDeepLinks.Helpers
 			return string.Empty;
 		}
 
+		public async Task<string> GetCurrentBranchAsync
+		(
+			string workingDirectory,
+			string defaultBranch = "main"
+		)
+		{
+			var gitRoot = GetGitFolder( workingDirectory );
+
+			// TODO: Git Command version
+
+			// ref: refs/heads/master
+			var branch = defaultBranch;
+			var gitHead = $@"{gitRoot.FullName}\HEAD";
+			using( var tr = File.OpenText( gitHead ) )
+			{
+				var line = await tr.ReadLineAsync();
+				while( line != null )
+				{
+					if( line.Length < 2 )
+					{
+						continue;
+					}
+					var refIndex = line.IndexOf( "ref:", CurrentCultureIgnoreCase );
+					if( refIndex != -1 )
+					{
+						var lastSlash = line.LastIndexOf( '/' );
+						branch = line.Substring( lastSlash + 1 );
+						return branch;
+					}
+					line = await tr.ReadLineAsync();
+				}
+			}
+			await Task.CompletedTask;
+			return branch;
+		}
+
+
 		private async Task<string> RunGitCommandAsync
 		(
 			string arguments,
@@ -108,13 +147,19 @@ namespace SourceControlDeepLinks.Helpers
 
 		private DirectoryInfo GetGitFolder(string workingDirectory)
 		{
+			if( _gitFolder != null )
+			{
+				return _gitFolder;
+			}
+
 			var di = new DirectoryInfo( workingDirectory );
 			while(di != null)
 			{
 				var gitDir = di.GetDirectories( ".git", SearchOption.TopDirectoryOnly );
 				if (gitDir.Length > 0)
 				{
-					return gitDir[0];
+					_gitFolder = gitDir[ 0 ];
+					return _gitFolder;
 				}
 				di = di.Parent;
 			}

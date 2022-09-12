@@ -15,10 +15,17 @@ namespace SSMSVSUtils
 
 	public class ExtensionOptions : BaseOptionModel<ExtensionOptions>, IExtensionOptions
 	{
-		[Category( OptionsPageCategoryName + " Logging" )]
+		private SSMSVSUtilsPackage _package;
+
+		[ Category( OptionsPageCategoryName + " Logging" )]
 		[DisplayName( "Diagnostic Output" )]
 		[Description( "Enables Output Pane diagnostics" )]
 		[DefaultValue( false )]
 		public bool DiagnosticOutput { get; set; } = false;
+
+		public void SetPackage( ToolkitPackage package )
+		{
+			_package = (SSMSVSUtilsPackage)package;
+		}
 	}
 }

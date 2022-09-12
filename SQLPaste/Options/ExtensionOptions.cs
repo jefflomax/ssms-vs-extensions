@@ -16,7 +16,9 @@ namespace SQLPaste
 
 	public class ExtensionOptions : BaseOptionModel<ExtensionOptions>, IExtensionOptions
 	{
-		[Category( PasteSpecial + " Options" )]
+		SQLPastePackage _package;
+
+		[ Category( PasteSpecial + " Options" )]
 		[DisplayName( PasteAs + " CSV Horizontal" )]
 		[Description( "Controls if Paste As CSV emits linfeeds" )]
 		[DefaultValue( true )]
@@ -41,6 +43,10 @@ namespace SQLPaste
 		[DefaultValue( false )]
 		public bool DiagnosticOutput { get; set; } = false;
 
+		public void SetPackage(ToolkitPackage package )
+		{
+			_package = (SQLPastePackage)package;
+		}
 
 		public override string ToString()
 		{

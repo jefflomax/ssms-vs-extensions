@@ -1,6 +1,6 @@
 ﻿namespace SharedSrc.Interfaces
 {
-	public interface IExtensionOptions
+	public interface IExtensionOptions : IBaseExtensionOptions
 	{
 		bool DiagnosticOutput { get; set; }
 		string GitExecutable { get; set; }

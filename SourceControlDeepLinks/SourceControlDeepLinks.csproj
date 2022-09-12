@@ -52,8 +52,12 @@
     <Compile Include="Commands\DeepLinkFormatDynamicCommand.cs" />
     <Compile Include="Helpers\BitbucketHelper.cs" />
     <Compile Include="Helpers\GitHelper.cs" />
+    <Compile Include="Helpers\GithubProviderHelper.cs" />
+    <Compile Include="Helpers\ProviderHelper.cs" />
+    <Compile Include="Helpers\ProviderLinkInfo.cs" />
     <Compile Include="Options\ExtensionOptions.cs" />
     <Compile Include="Options\IExtensionOptions.cs" />
+    <Compile Include="Options\ProviderInfo.cs" />
     <Compile Include="Options\SourceProviderEnum.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources\Constants.cs" />
