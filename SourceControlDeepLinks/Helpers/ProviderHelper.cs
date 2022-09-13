@@ -22,7 +22,7 @@ namespace SourceControlDeepLinks.Helpers
 			switch( sourceProvider )
 			{
 				case SourceProvider.BitbucketServer:
-					return BitbucketHelper.GetDefault( _appSettings );
+					return BitbucketProviderHelper.GetDefault( _appSettings );
 
 				case SourceProvider.GitHub:
 					return GithubProviderHelper.GetDefault( _appSettings );
@@ -52,6 +52,16 @@ namespace SourceControlDeepLinks.Helpers
 						activeFilePath,
 						bookmarkedLines,
 						currentBranch
+					);
+
+				case SourceProvider.BitbucketServer:
+					return BitbucketProviderHelper.GetBitbucketDeepLink
+					(
+						providerInfo,
+						remoteOrigin,
+						repoRoot,
+						activeFilePath,
+						bookmarkedLines
 					);
 			}
 

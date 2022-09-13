@@ -8,7 +8,7 @@ using SourceControlDeepLinks.Options;
 
 namespace SourceControlDeepLinks.Helpers
 {
-	public static class BitbucketHelper
+	public static class BitbucketProviderHelper
 	{
 		public static ProviderInfo GetDefault( AppSettingsHelper appSettingsHelper )
 		{
@@ -20,18 +20,22 @@ namespace SourceControlDeepLinks.Helpers
 			return pi;
 		}
 
-		public static (string deepLink, string pathInRepo) GetBitbucketDeepLink
+		public static ProviderLinkInfo GetBitbucketDeepLink
 		(
+			ProviderInfo providerInfo,
 			string remoteRepoUrl,
 			string repoRoot,
 			string filePath,
-			string bookmarks,
-			AppSettingsHelper appSettingsHelper
+			string bookmarks
 		)
 		{
-			var scm = appSettingsHelper.GetString("SCM");
-			var domain = appSettingsHelper.GetString("BitbucketDomain");
-			var bitbucketBaseFormat = appSettingsHelper.GetString("BitbucketBase");
+			//var scm = appSettingsHelper.GetString("SCM");
+			//var domain = appSettingsHelper.GetString("BitbucketDomain");
+			//var bitbucketBaseFormat = appSettingsHelper.GetString("BitbucketBase");
+			var scm = providerInfo.ProjectPrefix;
+			var domain = providerInfo.Domain;
+			var bitbucketBaseFormat = providerInfo.BaseUrl;
+
 			var bitbucketBase = string.Format(bitbucketBaseFormat, domain);
 
 			// Find the BB PROJECT which follows /scm/
@@ -57,10 +61,10 @@ namespace SourceControlDeepLinks.Helpers
 				? string.Empty
 				: $"#{bookmarks}";
 
-			// Build the BB Source URL
-			var bitbucketDeepLink  = $"{bitbucketBase}/{project}/repos/{repoName}/browse/{filePathFragment}{lines}";
+			// Build the Bitbucket Deep Link Source URL
+			var deepLink = $"{bitbucketBase}/{project}/repos/{repoName}/browse/{filePathFragment}{lines}";
 
-			return (bitbucketDeepLink, filePathInRepo);
+			return new ProviderLinkInfo( deepLink, filePathInRepo );
 		}
 	}
 }

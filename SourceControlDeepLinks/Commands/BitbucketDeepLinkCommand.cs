@@ -110,14 +110,6 @@ namespace SourceControlDeepLinks.Commands
 				return;
 			}
 
-#if false
-			// TODO: remove
-			if( state.DiagnosticOutput && sbDiagnostics.Length > 0 )
-			{
-				await package.ToOutputPaneAsync( sbDiagnostics.ToString() );
-			}
-#endif
-
 			var file = Path.GetFileNameWithoutExtension( activeFilePath );
 			var extension = Path.GetExtension( activeFilePath );
 			var workingDirectory = Path.GetDirectoryName( activeFilePath );
@@ -131,11 +123,9 @@ namespace SourceControlDeepLinks.Commands
 			var remoteOrigin = await gitHelper.GetRemoteOriginUrlAsync( workingDirectory );
 			var currentBranch = await gitHelper.GetCurrentBranchAsync( workingDirectory );
 
-			var appSettingsHelper = new AppSettingsHelper(Package);
-
 			var bookmarkedLines = e.InValue as string;
 			var providerHelper = new ProviderHelper( package );
-			var deepLink = providerHelper.GetDeepLink
+			var providerLinkInfo = providerHelper.GetDeepLink
 			(
 				provider,
 				state.GetProviderInfoFromForm(),
@@ -146,45 +136,44 @@ namespace SourceControlDeepLinks.Commands
 				currentBranch
 			);
 
-			string bbDeepLink;
-			string pathInRepo;
-			if( deepLink != null )
+			if( providerLinkInfo == null )
 			{
-				bbDeepLink = deepLink.DeepLink;
-				pathInRepo = deepLink.PathInRepo;
-			}
-			else
-			{
-				// TODO: Migrate BB to ExtensionOptions
-				(bbDeepLink, pathInRepo) = BitbucketHelper.GetBitbucketDeepLink
+				await package.ToOutputPaneAsync
 				(
-					remoteOrigin,
-					repoRoot,
-					activeFilePath,
-					bookmarkedLines,
-					appSettingsHelper
+					$"Unable to retrieve deep link {provider.ToString()}{nl}" +
+					$"{repoRoot}{nl}"+
+					$"{remoteOrigin}{nl}"+
+					$"{activeFilePath}{nl}"
 				);
+				return;
 			}
+
+			var deepLink = providerLinkInfo.DeepLink;
+			var pathInRepo = providerLinkInfo.PathInRepo;
 
 			if (state.DiagnosticOutput)
 			{
-				await package.ToOutputPaneAsync($"Repo Root: {repoRoot}{nl}Repo Path: {pathInRepo}{nl}Remote Org: {remoteOrigin}{nl}Source File: {activeFilePath}{nl}");
+				await package.ToOutputPaneAsync
+				(
+					$"Repo Root: {repoRoot}{nl}Repo Path: {pathInRepo}{nl}"+
+					$"Remote Org: {remoteOrigin}{nl}Source File: {activeFilePath}{nl}"
+				);
 			}
 
 			if ( state.Format)
 			{
 				// {0} url {1} path {2} file {3} extension
-				bbDeepLink = string.Format(state.FormatString, bbDeepLink, pathInRepo, file, extension);
+				deepLink = string.Format(state.FormatString, deepLink, pathInRepo, file, extension);
 			}
 
 			if( state.OutputToClipboard )
 			{
-				ClipboardHelper.SetData( bbDeepLink );
+				ClipboardHelper.SetData( deepLink );
 			}
 
 			if( state.OutputToPane )
 			{
-				await package.ToOutputPaneAsync( bbDeepLink );
+				await package.ToOutputPaneAsync( deepLink );
 			}
 		}
 

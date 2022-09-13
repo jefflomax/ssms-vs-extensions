@@ -50,7 +50,7 @@
     <Compile Include="Commands\BitbucketDeepLinkCommand.cs" />
     <Compile Include="Commands\BitbucketLinesDeepLinkCommand.cs" />
     <Compile Include="Commands\DeepLinkFormatDynamicCommand.cs" />
-    <Compile Include="Helpers\BitbucketHelper.cs" />
+    <Compile Include="Helpers\BitbucketProviderHelper.cs" />
     <Compile Include="Helpers\GitHelper.cs" />
     <Compile Include="Helpers\GithubProviderHelper.cs" />
     <Compile Include="Helpers\ProviderHelper.cs" />
