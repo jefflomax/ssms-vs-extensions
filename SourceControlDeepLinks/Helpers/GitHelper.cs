@@ -145,7 +145,7 @@ namespace SourceControlDeepLinks.Helpers
 			return standardOutput;
 		}
 
-		private DirectoryInfo GetGitFolder(string workingDirectory)
+		private DirectoryInfo GetGitFolder( string workingDirectory )
 		{
 			if( _gitFolder != null )
 			{
@@ -153,10 +153,10 @@ namespace SourceControlDeepLinks.Helpers
 			}
 
 			var di = new DirectoryInfo( workingDirectory );
-			while(di != null)
+			while( di != null )
 			{
 				var gitDir = di.GetDirectories( ".git", SearchOption.TopDirectoryOnly );
-				if (gitDir.Length > 0)
+				if ( gitDir.Length > 0 )
 				{
 					_gitFolder = gitDir[ 0 ];
 					return _gitFolder;

@@ -29,7 +29,6 @@ namespace SourceControlDeepLinks.Commands
 			var package = GetPackage;
 			var state = package.GetOptionsState();
 			var nl = Environment.NewLine;
-			string activeFilePath = null;
 			var sbDiagnostics = new StringBuilder();
 
 			// Do not emit anything to the Output Pane until the
@@ -38,25 +37,128 @@ namespace SourceControlDeepLinks.Commands
 			// GetActiveDocumentViewAsync also is confused by
 			// ASPX files
 
+			var activeFilePath = await GetActiveFilePathAsync( sbDiagnostics );
+
+			//await GetSolutionFolderAsync();
+
+			if( string.IsNullOrEmpty( activeFilePath ) )
+			{
+				await package.ToOutputPaneAsync( sbDiagnostics.ToString() );
+				return;
+			}
+
+			var file = Path.GetFileNameWithoutExtension( activeFilePath );
+			var extension = Path.GetExtension( activeFilePath );
+			var workingDirectory = Path.GetDirectoryName( activeFilePath );
+
+			var git = state.GitExecutable;
+			var gitHelper = new GitHelper( git, state.BypassGit );
+
+			var provider = state.Provider;
+
+			var repoRoot = await gitHelper.GetRepositoryRootAsync( workingDirectory );
+			if( string.IsNullOrEmpty( repoRoot ) )
+			{
+				await package.ToOutputPaneAsync
+				(
+					$"Could not locate '.git' folder for {workingDirectory}{nl}" +
+					"This is difficult enough when the file is in a repository..."
+				);
+				return;
+			}
+
+			var remoteOrigin = await gitHelper.GetRemoteOriginUrlAsync( workingDirectory );
+			var currentBranch = await gitHelper.GetCurrentBranchAsync( workingDirectory );
+
+			var bookmarkedLines = e.InValue as string;
+			var providerHelper = new ProviderHelper( package );
+			var providerLinkInfo = providerHelper.GetDeepLink
+			(
+				provider,
+				state.GetProviderInfoFromForm(),
+				remoteOrigin,
+				repoRoot,
+				activeFilePath,
+				bookmarkedLines,
+				currentBranch
+			);
+
+			if( providerLinkInfo == null )
+			{
+				await package.ToOutputPaneAsync
+				(
+					$"Unable to retrieve deep link {provider.ToString()}{nl}" +
+					$"{repoRoot}{nl}" +
+					$"{remoteOrigin}{nl}" +
+					$"{activeFilePath}{nl}"
+				);
+				return;
+			}
+
+			var deepLink = providerLinkInfo.DeepLink;
+			var pathInRepo = providerLinkInfo.PathInRepo;
+
+			if( state.DiagnosticOutput )
+			{
+				await package.ToOutputPaneAsync
+				(
+					$"Repo Root: {repoRoot}{nl}Repo Path: {pathInRepo}{nl}" +
+					$"Remote Org: {remoteOrigin}{nl}Source File: {activeFilePath}{nl}"
+				);
+			}
+
+			if( state.Format )
+			{
+				// {0} url {1} path {2} file {3} extension
+				deepLink = string.Format( state.FormatString, deepLink, pathInRepo, file, extension );
+			}
+
+			if( state.OutputToClipboard )
+			{
+				ClipboardHelper.SetData( deepLink );
+			}
+
+			if( state.OutputToPane )
+			{
+				await package.ToOutputPaneAsync( deepLink );
+			}
+		}
+
+		private static async Task<string> GetSolutionFolderAsync()
+		{
+			var solutionFile = string.Empty;
+			var solutionDirectory = string.Empty;
+			var solution = await VS.Solutions.GetCurrentSolutionAsync();
+			if( solution != null )
+			{
+				solutionFile = solution.FullPath;
+				solutionDirectory = Path.GetDirectoryName( solutionFile );
+			}
+			return solutionDirectory;
+		}
+
+		private async Task<string> GetActiveFilePathAsync( StringBuilder sbDiagnostics )
+		{
+			string activeFilePath = null;
+
 			// Tweakster ResetZoomLevel does this, presumably
 			// because GetActiveDocumentViewAsync is disappointing
 			DTE2 dte = await DteHelper.GetDTEAsync();
 			if( dte == null || dte.ActiveDocument == null )
 			{
-				return;
+				return null;
 			}
 
 			// It seems that ASPX files generally are not working
 			// Further, GetActiveDocumentView may return the Output Pane
-			//https://github.com/VsixCommunity/Community.VisualStudio.Toolkit/issues/317
-			//https://stackoverflow.com/questions/2868127/get-the-selected-text-of-the-editor-window-visual-studio-extension
-
+			// https://github.com/VsixCommunity/Community.VisualStudio.Toolkit/issues/317
+			// https://stackoverflow.com/questions/2868127/get-the-selected-text-of-the-editor-window-visual-studio-extension
 			// https://stackoverflow.com/questions/31759396/vsix-adding-a-menu-item-to-the-visual-studio-editor-context-menu/31769170#31769170
 
 			var (hasTextView, docView) = await GetActiveDocumentViewAsync();
-			if (!hasTextView)
+			if( !hasTextView )
 			{
-				return;
+				return null;
 			}
 
 			// Try to detect non Editor window
@@ -93,88 +195,7 @@ namespace SourceControlDeepLinks.Commands
 				activeFilePath = docView.FilePath;
 			}
 
-#if false
-			string solutionFile = string.Empty;
-			string solutionDirectory = string.Empty;
-			var solution = await VS.Solutions.GetCurrentSolutionAsync();
-			if( solution != null)
-			{
-				solutionFile = solution.FullPath;
-				solutionDirectory = Path.GetDirectoryName( solutionFile );
-			}
-#endif
-
-			if( string.IsNullOrEmpty(activeFilePath) )
-			{
-				await package.ToOutputPaneAsync( sbDiagnostics.ToString() );
-				return;
-			}
-
-			var file = Path.GetFileNameWithoutExtension( activeFilePath );
-			var extension = Path.GetExtension( activeFilePath );
-			var workingDirectory = Path.GetDirectoryName( activeFilePath );
-
-			var git = state.GitExecutable;
-			var gitHelper = new GitHelper( git, state.BypassGit );
-
-			var provider = state.Provider;
-
-			var repoRoot = await gitHelper.GetRepositoryRootAsync( workingDirectory );
-			var remoteOrigin = await gitHelper.GetRemoteOriginUrlAsync( workingDirectory );
-			var currentBranch = await gitHelper.GetCurrentBranchAsync( workingDirectory );
-
-			var bookmarkedLines = e.InValue as string;
-			var providerHelper = new ProviderHelper( package );
-			var providerLinkInfo = providerHelper.GetDeepLink
-			(
-				provider,
-				state.GetProviderInfoFromForm(),
-				remoteOrigin,
-				repoRoot,
-				activeFilePath,
-				bookmarkedLines,
-				currentBranch
-			);
-
-			if( providerLinkInfo == null )
-			{
-				await package.ToOutputPaneAsync
-				(
-					$"Unable to retrieve deep link {provider.ToString()}{nl}" +
-					$"{repoRoot}{nl}"+
-					$"{remoteOrigin}{nl}"+
-					$"{activeFilePath}{nl}"
-				);
-				return;
-			}
-
-			var deepLink = providerLinkInfo.DeepLink;
-			var pathInRepo = providerLinkInfo.PathInRepo;
-
-			if (state.DiagnosticOutput)
-			{
-				await package.ToOutputPaneAsync
-				(
-					$"Repo Root: {repoRoot}{nl}Repo Path: {pathInRepo}{nl}"+
-					$"Remote Org: {remoteOrigin}{nl}Source File: {activeFilePath}{nl}"
-				);
-			}
-
-			if ( state.Format)
-			{
-				// {0} url {1} path {2} file {3} extension
-				deepLink = string.Format(state.FormatString, deepLink, pathInRepo, file, extension);
-			}
-
-			if( state.OutputToClipboard )
-			{
-				ClipboardHelper.SetData( deepLink );
-			}
-
-			if( state.OutputToPane )
-			{
-				await package.ToOutputPaneAsync( deepLink );
-			}
+			return activeFilePath;
 		}
 
 		private async Task<string> GetActiveEditorAsync( StringBuilder sbDiagnostics )
