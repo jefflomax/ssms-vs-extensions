@@ -35,7 +35,7 @@ namespace SourceControlDeepLinks.Helpers
 
 			await Task.CompletedTask;
 			var gitRoot = GetGitFolder( workingDirectory );
-			return (gitRoot.Extension == ".git")
+			return (gitRoot?.Extension == ".git")
 				? gitRoot.Parent.FullName
 				: string.Empty;
 		}
