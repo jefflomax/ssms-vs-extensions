@@ -5,10 +5,10 @@ using System.Text;
 using System.Threading.Tasks;
 using Community.VisualStudio.Toolkit;
 using Microsoft.VisualStudio;
-using Microsoft.VisualStudio.Shell;
+using ThreadHelper = Microsoft.VisualStudio.Shell.ThreadHelper;
 using Microsoft.VisualStudio.Shell.Interop;
 using Microsoft.VisualStudio.OLE.Interop;
-using Task = System.Threading.Tasks.Task;
+//using Task = System.Threading.Tasks.Task;
 using EnvDTE;
 using EnvDTE80;
 

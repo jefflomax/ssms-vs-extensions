@@ -4,6 +4,6 @@ namespace SharedSrc.Interfaces
 {
 	public interface IBaseExtensionOptions
 	{
-		void SetPackage( ToolkitPackage package );
+		// Do not try to inject package here
 	}
 }

@@ -11,13 +11,13 @@ namespace SharedSrc.Helpers
 	public class AppSettingsHelper
 	{
 		private readonly KeyValueConfigurationCollection _appSettings;
-		public AppSettingsHelper(Package package)
+		public AppSettingsHelper()
 		{
 			// Default ConfigurationManger AppSettings will be the DevEnv.exe one
 			// Need to reference our config
 			var appConfigPath = System.IO
 				.Path
-				.GetDirectoryName(package.GetType().Assembly.Location);
+				.GetDirectoryName(this.GetType().Assembly.Location);
 
 			var configMap = new ExeConfigurationFileMap();
 			configMap.ExeConfigFilename = System.IO

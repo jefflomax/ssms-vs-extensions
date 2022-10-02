@@ -43,9 +43,10 @@ namespace SourceControlDeepLinks
 			await this.RegisterCommandsAsync();
 			this.RegisterToolWindows();
 
-			_extensionOutputPaneName = ExtensionOutputPane;
-			_state = new ExtensionOptions();
+			//_extensionOutputPaneName = ExtensionOutputPane;
+			//_state = new ExtensionOptions();
 
+			// sets _state var
 			await GetOptionsFromVSSettingsAsync();
 
 			await LogStartupInformationAsync( ExtensionOutputPane, Vsix.Version );

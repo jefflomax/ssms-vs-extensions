@@ -1,53 +1,69 @@
-﻿using System;
+﻿global using Community.VisualStudio.Toolkit;
+global using Microsoft.VisualStudio.Shell;
+global using System;
+//global using Task = System.Threading.Tasks.Task;
+using System.Threading.Tasks;
+using SharedSrc.Commands;
+using SharedSrc.Interfaces;
 using System.Runtime.InteropServices;
 using System.Threading;
-using Microsoft.VisualStudio.Shell;
-using Task = System.Threading.Tasks.Task;
+using static SourceControlDeepLinks.Resources.Constants;
+using Microsoft.VisualStudio.Shell.Interop;
+using Microsoft.VisualStudio.Settings;
+using SourceControlDeepLinks.Helpers;
 
-namespace SourceControlDeepLinksVS2022
+namespace SourceControlDeepLinks
 {
-	/// <summary>
-	/// This is the class that implements the package exposed by this assembly.
-	/// </summary>
-	/// <remarks>
-	/// <para>
-	/// The minimum requirement for a class to be considered a valid package for Visual Studio
-	/// is to implement the IVsPackage interface and register itself with the shell.
-	/// This package uses the helper classes defined inside the Managed Package Framework (MPF)
-	/// to do it: it derives from the Package class that provides the implementation of the
-	/// IVsPackage interface and uses the registration attributes defined in the framework to
-	/// register itself and its components with the shell. These attributes tell the pkgdef creation
-	/// utility what data to put into .pkgdef file.
-	/// </para>
-	/// <para>
-	/// To get loaded into VS, the package must be referred by &lt;Asset Type="Microsoft.VisualStudio.VsPackage" ...&gt; in .vsixmanifest file.
-	/// </para>
-	/// </remarks>
 	[PackageRegistration(UseManagedResourcesOnly = true, AllowsBackgroundLoading = true)]
-	[Guid(SourceControlDeepLinksVS2022Package.PackageGuidString)]
-	public sealed class SourceControlDeepLinksVS2022Package : AsyncPackage
+	[InstalledProductRegistration(Vsix.Name, Vsix.Description, Vsix.Version)]
+	[ProvideMenuResource("Menus.ctmenu", 1)]
+	[Guid(PackageGuids.SourceControlDeepLinksString)]
+	[ProvideOptionPage( typeof( OptionsProvider.ExtensionOptionsProv ), OptionsPageCategoryName, OptionsPageName, 0, 0, true )]
+	[ProvideProfile( typeof( OptionsProvider.ExtensionOptionsProv ), OptionsPageCategoryName, OptionsPageName, 0, 0, true )]
+	public sealed class SourceControlDeepLinksVS2022Package 
+		: BasePackage<ExtensionOptions>, IBasePackage<ExtensionOptions>
 	{
-		/// <summary>
-		/// SourceControlDeepLinksVS2022Package GUID string.
-		/// </summary>
-		public const string PackageGuidString = "3f2f5e7d-00dd-46a8-93d3-6df4272c5a85";
-
-		#region Package Members
-
-		/// <summary>
-		/// Initialization of the package; this method is called right after the package is sited, so this is the place
-		/// where you can put all the initialization code that rely on services provided by VisualStudio.
-		/// </summary>
-		/// <param name="cancellationToken">A cancellation token to monitor for initialization cancellation, which can occur when VS is shutting down.</param>
-		/// <param name="progress">A provider for progress updates.</param>
-		/// <returns>A task representing the async work of package initialization, or an already completed task if there is none. Do not return null from this method.</returns>
-		protected override async Task InitializeAsync(CancellationToken cancellationToken, IProgress<ServiceProgressData> progress)
+		protected override async Task InitializeAsync
+		(
+			CancellationToken cancellationToken,
+			IProgress<ServiceProgressData> progress
+		)
 		{
-			// When initialized asynchronously, the current thread may be a background thread at this point.
-			// Do any initialization that requires the UI thread after switching to the UI thread.
-			await this.JoinableTaskFactory.SwitchToMainThreadAsync(cancellationToken);
+			// Setup output pane first so we can log there
+			var outputWindowPane = await SetupOutputPaneAsync( ExtensionOutputPane );
+
+			await this.RegisterCommandsAsync();
+			this.RegisterToolWindows();
+
+			var settingsHelper = new SettingsHelper( typeof( ExtensionOptions ) );
+			var propertyInSettings = nameof( ExtensionOptions.Provider );
+			if( ! await settingsHelper.PropertyExistsAsync( propertyInSettings ) )
+			{
+				await outputWindowPane.WriteLineAsync( $"Property {propertyInSettings} not found in Setting" );
+			}
+
+			_extensionOutputPaneName = ExtensionOutputPane;
+			_state = new ExtensionOptions();
+
+			await GetOptionsFromVSSettingsAsync();
+
+			await LogStartupInformationAsync( ExtensionOutputPane, Vsix.Version );
+
+			ExtensionOptions.Saved += OptionsSaved;
+		}
+		public ExtensionOptions GetOptionsState() => _state;
+
+		private void OptionsSaved( ExtensionOptions extensionOptions )
+		{
+			_ = ThreadHelper.JoinableTaskFactory.RunAsync( async () =>
+			{
+				await ToOutputPaneAsync( $"{ExtensionOutputPane} {extensionOptions}" );
+			} );
 		}
 
-		#endregion
+		public override async Task<ExtensionOptions> GetLiveSettingsInstanceAsync()
+		{
+			return await ExtensionOptions.GetLiveInstanceAsync();
+		}
 	}
 }

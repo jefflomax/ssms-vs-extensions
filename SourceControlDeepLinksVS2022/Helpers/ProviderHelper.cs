@@ -6,10 +6,7 @@ namespace SourceControlDeepLinks.Helpers
 	public class ProviderHelper
 	{
 		AppSettingsHelper _appSettings;
-		public ProviderHelper
-		(
-			SourceControlDeepLinksPackage package
-		)
+		public ProviderHelper()
 		{
 			_appSettings = new AppSettingsHelper();
 		}

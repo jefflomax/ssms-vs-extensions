@@ -4,8 +4,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Task = System.Threading.Tasks.Task;
-using Microsoft.VisualStudio.Shell;
+//using Task = System.Threading.Tasks.Task;
+//using Microsoft.VisualStudio.Shell;
 using SharedSrc.Interfaces;
 
 namespace SharedSrc.Commands
@@ -84,9 +84,8 @@ namespace SharedSrc.Commands
 		protected async Task GetOptionsFromVSSettingsAsync()
 		{
 			// read settings
-			_state.SetPackage( this );
 			var options = await GetLiveSettingsInstanceAsync();
-			options.SetPackage( this );
+			// TODO: Not sure if we should replace or copy properties
 			_state = options;
 		}
 
