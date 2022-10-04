@@ -9,6 +9,7 @@ using Community.VisualStudio.Toolkit;
 using Microsoft.VisualStudio.Shell;
 using EnvDTE80;
 //using Task = System.Threading.Tasks.Task;
+using Task = System.Threading.Tasks.Task;
 using SourceControlDeepLinks.Helpers;
 using SharedSrc.Commands;
 using static SourceControlDeepLinks.Resources.Constants;
@@ -21,8 +22,8 @@ namespace SourceControlDeepLinks.Commands
 {
 	[Command( PackageIds.BitbucketDeepLinkCommand )]
 	internal sealed class BitbucketDeepLinkCommand
-		: CommandShared<BitbucketDeepLinkCommand, SourceControlDeepLinksVS2022Package, ExtensionOptions>,
-			ICommandShared<SourceControlDeepLinksVS2022Package>
+		: CommandShared<BitbucketDeepLinkCommand, SourceControlDeepLinksPackage, ExtensionOptions>,
+			ICommandShared<SourceControlDeepLinksPackage>
 	{
 		protected override async Task ExecuteAsync(OleMenuCmdEventArgs e)
 		{

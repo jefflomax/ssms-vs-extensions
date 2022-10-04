@@ -1,4 +1,6 @@
-﻿using Microsoft.VisualStudio.Settings;
+﻿using Community.VisualStudio.Toolkit;
+using Microsoft.VisualStudio.Settings;
+using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Shell.Interop;
 using Microsoft.VisualStudio.Threading;
 using System;

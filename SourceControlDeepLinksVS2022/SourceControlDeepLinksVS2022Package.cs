@@ -20,7 +20,7 @@ namespace SourceControlDeepLinks
 	[Guid(PackageGuids.SourceControlDeepLinksString)]
 	[ProvideOptionPage( typeof( OptionsProvider.ExtensionOptionsProv ), OptionsPageCategoryName, OptionsPageName, 0, 0, true )]
 	[ProvideProfile( typeof( OptionsProvider.ExtensionOptionsProv ), OptionsPageCategoryName, OptionsPageName, 0, 0, true )]
-	public sealed class SourceControlDeepLinksVS2022Package 
+	public sealed class SourceControlDeepLinksPackage 
 		: BasePackage<ExtensionOptions>, IBasePackage<ExtensionOptions>
 	{
 		protected override async Task InitializeAsync

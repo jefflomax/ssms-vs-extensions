@@ -198,6 +198,7 @@ namespace SQLSynSugarAndValidation
 		{
 			uint subcollectionCount;
 
+			await JoinableTaskFactory.SwitchToMainThreadAsync();
 			if (store.GetSubCollectionCount( collectionName, out subcollectionCount ) == VSConstants.S_OK )
 			{
 				string subCollectionName;

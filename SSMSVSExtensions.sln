@@ -17,12 +17,17 @@ Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "SharedSrc", "SharedSrc\Shar
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SourceControlDeepLinksVS2022", "SourceControlDeepLinksVS2022\SourceControlDeepLinksVS2022.csproj", "{6124E701-D127-43CC-A495-EE03614F427E}"
 EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "SourceControlDLShared", "SourceControlDLShared\SourceControlDLShared.shproj", "{373DCC21-2FF6-40CA-8108-0DC646CA4553}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		SourceControlDLShared\SourceControlDLShared.projitems*{373dcc21-2ff6-40ca-8108-0dc646ca4553}*SharedItemsImports = 13
 		SharedSrc\SharedSrc.projitems*{3c01a506-2c7d-4960-87c0-3cbac57bc1d5}*SharedItemsImports = 13
 		SharedSrc\SharedSrc.projitems*{4e7f8fb3-33ee-4284-87fe-e78ebddb1406}*SharedItemsImports = 4
+		SourceControlDLShared\SourceControlDLShared.projitems*{4e7f8fb3-33ee-4284-87fe-e78ebddb1406}*SharedItemsImports = 4
 		SharedSrc\SharedSrc.projitems*{5150b5ef-a45d-4413-88d4-74170633301d}*SharedItemsImports = 4
 		SharedSrc\SharedSrc.projitems*{6124e701-d127-43cc-a495-ee03614f427e}*SharedItemsImports = 4
+		SourceControlDLShared\SourceControlDLShared.projitems*{6124e701-d127-43cc-a495-ee03614f427e}*SharedItemsImports = 4
 		SharedSrc\SharedSrc.projitems*{d298403f-60cc-469c-8346-4d7fa4ee9ab4}*SharedItemsImports = 4
 		SharedSrc\SharedSrc.projitems*{f14c5d20-d1c6-4830-b56e-5b6caa329da6}*SharedItemsImports = 4
 	EndGlobalSection

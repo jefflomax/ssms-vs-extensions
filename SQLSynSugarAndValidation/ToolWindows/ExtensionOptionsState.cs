@@ -11,7 +11,7 @@ namespace SQLSynSugarAndValidation.ToolWindows
 	public class ExtensionOptionsState
 	{
 		private bool _debug;
-		private bool _initialized;
+		//private bool _initialized;
 		private ObservableCollection<ValidationNode> _items;
 		private string _lisp;
 		private string _rewritten;
@@ -83,13 +83,13 @@ namespace SQLSynSugarAndValidation.ToolWindows
 			set { _rewritten = value; }
 		}
 
-		public bool Initialized { get { return _initialized; } }
+		//public bool Initialized { get { return _initialized; } }
 
 		public void FromOptions( ExtensionOptions options )
 		{
 		}
 
-		private void Debug(string s )
+		private void Debug( string s )
 		{
 #if DEBUG
 			if( _debug )
@@ -101,7 +101,7 @@ namespace SQLSynSugarAndValidation.ToolWindows
 
 		public override string ToString()
 		{
-			return $"Init {_initialized}";
+			return $"Init";
 		}
 	}
 }
