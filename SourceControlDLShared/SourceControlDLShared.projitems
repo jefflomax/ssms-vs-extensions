@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <MSBuildAllProjects Condition="'$(MSBuildVersion)' == '' Or '$(MSBuildVersion)' &lt; '16.0'">$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <SharedGUID>373dcc21-2ff6-40ca-8108-0dc646ca4553</SharedGUID>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration">
+    <Import_RootNamespace>SourceControlDLShared</Import_RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)Commands\BitbucketDeepLinkCommand.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Commands\BitbucketLinesDeepLinkCommand.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Commands\DeepLinkFormatDynamicCommand.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Helpers\BitbucketProviderHelper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Helpers\GitHelper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Helpers\GithubProviderHelper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Helpers\ProviderHelper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Helpers\ProviderLinkInfo.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Helpers\SettingsHelper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Options\ExtensionOptions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Options\IExtensionOptions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Options\ProviderInfo.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Options\SourceProviderEnum.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Resources\Constants.cs" />
+  </ItemGroup>
+</Project>

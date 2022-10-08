@@ -1,17 +1,17 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <CommandTable xmlns="http://schemas.microsoft.com/VisualStudio/2005-10-18/CommandTable" xmlns:xs="http://www.w3.org/2001/XMLSchema">
 
-	<Extern href="stdidcmd.h"/>
-	<Extern href="vsshlids.h"/>
-	<!-- 
-	See C:\programs\vs2019\VSExt\CSVPaste\packages\Microsoft.VSSDK.BuildTools.14.3.25407\tools\vssdk\inc
-	-->
-	<Include href="KnownImageIds.vsct"/>
-	<Include href="VSGlobals.vsct"/>
+  <Extern href="stdidcmd.h"/>
+  <Extern href="vsshlids.h"/>
+  <Include href="KnownImageIds.vsct"/>
+  <Include href="VSGlobals.vsct"/>
 
-<Commands package="SourceControlDeepLinks">
-
+  <Commands package="SourceControlDeepLinks">
 	<Groups>
+		<Group guid="SourceControlDeepLinks" id="MyMenuGroup" priority="0x0600">
+			<Parent guid="VSMainMenu" id="Tools"/>
+		</Group>
+
 		<Group
 			guid="SourceControlDeepLinks"
 			id="MyToolMenuFlyoutGroup"
@@ -25,7 +25,6 @@
 			priority="0x0600">
 			<Parent guid="SourceControlDeepLinks" id="ToolsExternalFlyoutMenu" />
 		</Group>
-
 	</Groups>
 
 	<Menus>
@@ -33,41 +32,39 @@
 		<!-- did add a new top level menu with an item -->
 		<!-- IDM_VS_MENU_TOOLS does nothing, IDG_VS_TOOLS_EXT_TOOLS works -->
 		<Menu guid="SourceControlDeepLinks" id="ToolsExternalFlyoutMenu"
-			priority="0x700"
-			type="Menu">
-			<Parent guid="guidSHLMainMenu"
-					id="IDG_VS_TOOLS_EXT_TOOLS" />
+			  priority="0x700"
+			  type="Menu">
+			  <Parent guid="guidSHLMainMenu"
+					  id="IDG_VS_TOOLS_EXT_TOOLS" />
 			<Strings>
-				<ButtonText>Bitbucket Links</ButtonText>
-				<ToolTipText>Get link to Bitbucket web</ToolTipText>
+				  <ButtonText>Source Control Deep Links</ButtonText>
+				  <ToolTipText>Get deep link to web</ToolTipText>
 			</Strings>
 		</Menu>
 
-	</Menus>
-
+	  </Menus>
 	<!--This section defines the elements the user can interact with, like a menu command or a button
 		or combo box in a toolbar. -->
 	<Buttons>
-<!--
-		<Button guid="SourceControlDeepLinks" id="BitBucketMenuButton" priority="0x0104" type="Button">
-			<Parent guid="SourceControlDeepLinks" id="MyPasteMenuGroup"/> 
-			<CommandFlag>TextMenuUseButton</CommandFlag>
-			<Strings>
-				<ButtonText>Bitbucket Deep Links</ButtonText>
-				<MenuText>Bitbucket Link</MenuText>
-				<LocCanonicalName>.SourceControlDeepLinks.BitbucketMenu</LocCanonicalName>
-				<ToolTipText>Get link to Bitbucket web</ToolTipText>
-			</Strings>
-		</Button>
--->
+	  <Button guid="SourceControlDeepLinks" id="MyCommand" priority="0x0100" type="Button">
+		<Parent guid="SourceControlDeepLinks" id="MyMenuGroup" />
+		<Icon guid="ImageCatalogGuid" id="StatusInformation" />
+		<CommandFlag>IconIsMoniker</CommandFlag>
+		<Strings>
+		  <ButtonText>VS2022 Community Cmd</ButtonText>
+		  <LocCanonicalName>.CommunityVS22.MyCommand</LocCanonicalName>
+		</Strings>
+	  </Button>
+
 		<Button guid="SourceControlDeepLinks" id="BitbucketDeepLinkCommand"
 			priority="0x0105"
 			type="Button">
-			<Parent guid="SourceControlDeepLinks" id="MyToolsExternalFlyoutMenuGroup"/> <!-- was MyToolMenuFlyoutGroup -->
+			<Parent guid="SourceControlDeepLinks" id="MyToolsExternalFlyoutMenuGroup"/>
+			<!-- was MyToolMenuFlyoutGroup -->
 			<Icon guid="ImageCatalogGuid" id="CloudFile"/>
 			<CommandFlag>IconIsMoniker</CommandFlag>
 			<Strings>
-				<ButtonText>Bitbucket Deep Link</ButtonText>
+				<ButtonText>Deep Link</ButtonText>
 				<LocCanonicalName>.SourceControlDeepLinks.BitBucketLinkCommand</LocCanonicalName>
 				<ToolTipText>Get link to Bitbucket web</ToolTipText>
 			</Strings>
@@ -78,9 +75,9 @@
 			type="Button">
 			<Parent guid="SourceControlDeepLinks" id="MyToolsExternalFlyoutMenuGroup"/>
 			<Icon guid="ImageCatalogGuid" id="WebFile"/>
-			<CommandFlag>IconIsMoniker</CommandFlag> 
+			<CommandFlag>IconIsMoniker</CommandFlag>
 			<Strings>
-				<ButtonText>Bitbucket Deep Link with Bookmarks</ButtonText>
+				<ButtonText>Deep Link with Bookmarks</ButtonText>
 				<LocCanonicalName>.SourceControlDeepLinks.BitBucketLinesLinkCommand</LocCanonicalName>
 				<ToolTipText>Get link to Bitbucket web w/bookmarks</ToolTipText>
 			</Strings>
@@ -101,42 +98,28 @@
 		</Button>
 
 	</Buttons>
-
-</Commands>
-
-
-
+  </Commands>
 <!--
-  <VisibilityConstraints>
-  </VisibilityConstraints>
--->
-
-	<!-- CommandPlacements -->
-
-<!-- This works, adds group to Edit with commands-->
-<!--
-		<CommandPlacement
+  <CommandPlacements>
+    <CommandPlacement
 			guid="SourceControlDeepLinks"
-			id="MyPasteMenuGroup"
+			id="BitbucketDeepLinkCommand"
 			priority="0x8000">
-			<Parent guid="guidSHLMainMenu" id="IDM_VS_MENU_EDIT"/>
-		</CommandPlacement>
+      <Parent guid="Team.Git.OpenCommandPrompt" id="GitMenu"/>
+    </CommandPlacement>    
+  </CommandPlacements>
 -->
-
-<!-- This did work, but made the commands a group in the tools window
-		<CommandPlacement
-			guid="SourceControlDeepLinks"
-			id="MyToolMenuFlyoutGroup"
-			priority="0x8000">
-			<Parent guid="guidSHLMainMenu" id="IDM_VS_MENU_TOOLS"/>
-		</CommandPlacement>
--->
-	<!-- /CommandPlacements -->
-
-<Symbols>
-
+  <Symbols>
+    <!--
+    <GuidSymbol name="Team.Git.OpenCommandPrompt" value="{57735D06-C920-4415-A2E0-7D6E6FBDFA99}">
+      <IDSymbol value="0x1012" name="GitMenu" />
+    </GuidSymbol> 
+    -->
     
-	<GuidSymbol name="SourceControlDeepLinks" value="{7a6afcfd-674d-409f-9cde-4e63c1fc73c8}">
+	<GuidSymbol name="SourceControlDeepLinks" value="{70b25cdd-89bd-4332-8e13-242e96a3766b}">
+	  <IDSymbol name="MyMenuGroup" value="0x0004" />
+	  <IDSymbol name="MyCommand" value="0x0100" />
+
 		<!-- <IDSymbol name="MyPasteMenuGroup" value="0x0001" /> -->
 		<IDSymbol name="MyToolMenuFlyout" value="0x0001"/>
 		<IDSymbol name="BitbucketDeepLinkCommand" value ="0x0101"/>
@@ -151,6 +134,5 @@
 		<IDSymbol name="BitBucketMenuButton" value="0x0202"/>
 		<IDSymbol name="MyToolMenuFlyoutGroup" value="0x0203"/>
 	</GuidSymbol>
-</Symbols>
-
+  </Symbols>
 </CommandTable>

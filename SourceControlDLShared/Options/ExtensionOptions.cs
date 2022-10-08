@@ -1,26 +1,31 @@
-﻿using Community.VisualStudio.Toolkit;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.Runtime.InteropServices;
 using SharedSrc.Interfaces;
-using static SourceControlDeepLinks.Resources.Constants;
 using System.Text;
-using SourceControlDeepLinks.Options;
 using System.Collections.Generic;
-using SourceControlDeepLinks.Helpers;
 using System.IO;
 using System.Reflection;
 using System.Linq;
 using System.Diagnostics;
+using SharedSrc.Helpers;
+using Community.VisualStudio.Toolkit;
+using SourceControlDeepLinks.Helpers;
+using SourceControlDeepLinks.Options;
+using static SourceControlDeepLinks.Resources.Constants;
+using Microsoft.VisualStudio.Shell;
 
 namespace SourceControlDeepLinks
 {
 	// getting apply button
 	// https://docs.microsoft.com/en-us/visualstudio/extensibility/creating-an-options-page?view=vs-2022
+
 	internal partial class OptionsProvider
 	{
 		// See attributes in package class
 		[ComVisible( true )]
-		public class ExtensionOptionsProv : BaseOptionPage<ExtensionOptions> { }
+		public class ExtensionOptionsProv : BaseOptionPage<ExtensionOptions> 
+		{
+		}
 
 	}
 
@@ -30,9 +35,7 @@ namespace SourceControlDeepLinks
 		: BaseOptionModel<ExtensionOptions>, IExtensionOptions
 	{
 		// Consider migrating to package
-		private static int _priorProvider;
-		private static SourceControlDeepLinksPackage _package;
-		private readonly string _sdl = "SourceControlDeepLinks ";
+		private static int _priorProvider = 0;
 		private readonly bool _debug;
 
 		// The .Instance property in this class is meant to be used
@@ -41,16 +44,44 @@ namespace SourceControlDeepLinks
 		public ExtensionOptions()
 		{
 			Settings = new Dictionary<string, ProviderInfo>();
-			SetFormToProviderFields(null);
+			SetFormToProviderFields(null); // Clear
+
+			var settingsHelper = new SettingsHelper( typeof( ExtensionOptions ) );
+			var propertyInSettings = nameof( ExtensionOptions.Provider );
+
+			_ = ThreadHelper.JoinableTaskFactory.RunAsync( async () =>
+			{
+				// This is more than icky
+				// The prior provider (Bitbucket, Github) is stored in a static,
+				// special code reads hidden dictionary property "Settings", which has several
+				// fields that change when the Provider is changed.
+				// But before any VS Settings have been saved, we read defaults from
+				// App.Config and DefaultValue properties.
+				// As this can be called many times before settings are persisted,
+				// if no "Provider" is in VS Settings, reset the priorProvider so it always
+				// resets, otherwise the fields will be empty
+
+				var propertyExists = await settingsHelper.PropertyExistsAsync( propertyInSettings );
+				if( !propertyExists )
+				{
+					_priorProvider = 0;
+					// DefaultValue attribute appears to ONLY work on boolean types
+					DefaultValueAttributeHelper.InitializeDefaultProperties
+					(
+						this,
+						nameof( Provider ) // assure this one initialized LAST
+					);
+				}
+			} );
+
 			_debug = true;
 		}
 
-		public void SetPackage( ToolkitPackage package )
-		{
-			_package = (SourceControlDeepLinksPackage)package;
-			Log( "Setting package on Extension Options" );
-		}
 
+		/// <summary>
+		/// As provider changges, restore a set of form fields
+		/// </summary>
+		/// <param name="pi"></param>
 		private void SetFormToProviderFields(ProviderInfo pi)
 		{
 			if( pi == null )
@@ -95,7 +126,7 @@ namespace SourceControlDeepLinks
 
 		[Category(SourceLink + " Options")]
 		[DisplayName("Bypass Git")]
-		[Description("Recommended - manually process .git to bypass git \"trust developers\"")]
+		[Description("Recommended - manually locate .git folder and parse HEAD and config to bypass git \"trust developers\"")]
 		[DefaultValue(true)]
 		public bool BypassGit { get; set; }
 
@@ -115,7 +146,7 @@ namespace SourceControlDeepLinks
 		[Category( SourceLink + " Provider" )]
 		[DisplayName( "Provider" )]
 		[Description( "Source Provider" )]
-		[DefaultValue( SourceProvider.BitbucketServer )]
+		[DefaultValue( SourceProvider.BitbucketServer )] // Neither 1 or SourceProvider.BitbucketServer worked
 		[TypeConverter( typeof( EnumConverter ) )]
 		public SourceProvider Provider
 		{
@@ -182,7 +213,7 @@ namespace SourceControlDeepLinks
 			SourceProvider currentProvider
 		)
 		{
-			var providerHelper = new ProviderHelper( _package );
+			var providerHelper = new ProviderHelper();
 			return providerHelper.GetProviderDefaults( currentProvider );
 		}
 
@@ -208,19 +239,19 @@ namespace SourceControlDeepLinks
 			return providerInfo;
 		}
 
-		[ Category( SourceLink + " Provider" )]
+		[Category( SourceLink + " Provider" )]
 		[DisplayName( "Domain" )]
-		[Description( "The domain name for the source url" )]
+		[Description( "The domain name for the source url e.g. yourdomain.com" )]
 		public string ProviderDomain { get; set; }
 
 		[Category( SourceLink + " Provider" )]
 		[DisplayName( "Project Prefix" )]
-		[Description( "Used to locate the project" )]
+		[Description( "Used to locate the project in the origin url" )]
 		public string ProviderProjectPrefix { get; set; }
 
-		[ Category( SourceLink + " Provider" )]
+		[Category( SourceLink + " Provider" )]
 		[DisplayName( "Base Url" )]
-		[Description( "Source Url start '{0}' is domain" )]
+		[Description( "Source Url start (pretocol, subdomain, domain, tld, category) '{0}' is the domain" )]
 		public string ProviderBaseUrl { get; set; }
 
 		[Category( SourceLink + " Provider" )]
@@ -330,7 +361,7 @@ namespace SourceControlDeepLinks
 						}
 						else
 						{
-							Log( $"{_sdl} Key {key} not found" );
+							Log( $"Key {key} not found" );
 						}
 					}
 					line = sr.ReadLine();
@@ -347,12 +378,12 @@ namespace SourceControlDeepLinks
 			string propertyName
 		)
 		{
-			Log( $"SerializeValue {propertyName}" );
-
 			if( propertyName != nameof( Settings ) )
 			{
 				return base.SerializeValue( value, type, propertyName );
 			}
+
+			Log( $"SerializeValue {propertyName}" );
 
 			var sb = new StringBuilder();
 			foreach(var key in Settings
@@ -367,6 +398,11 @@ namespace SourceControlDeepLinks
 			return s;
 		}
 
+		/// <summary>
+		/// Force the hidden "Settings" property to read first, so it's
+		/// dictionary is available when the Provider is set
+		/// </summary>
+		/// <returns></returns>
 		protected override IEnumerable<PropertyInfo> GetOptionProperties()
 		{
 			Log( "GetOptionProperties" );
@@ -411,12 +447,13 @@ namespace SourceControlDeepLinks
 			return isInEnum;
 		}
 
+
 		[Conditional( "DEBUG" )]
 		private void Log( string message )
 		{
 			if( _debug )
 			{
-				Debug.WriteLine( $"{_sdl}{message}" );
+				Debug.WriteLine( $"{LogPrefix}{message}" );
 			}
 		}
 	}

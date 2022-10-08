@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Forms;
 
 namespace SharedSrc.Helpers
 {
@@ -60,6 +61,7 @@ namespace SharedSrc.Helpers
 				AddComma(sb);
 				sb.Append(DataFormats.UnicodeText);
 			}
+#if false
 			if (Clipboard.ContainsData(DataFormats.Xaml))
 			{
 				AddComma(sb);
@@ -70,7 +72,7 @@ namespace SharedSrc.Helpers
 				AddComma(sb);
 				sb.Append(DataFormats.XamlPackage);
 			}
-
+#endif
 			return sb.ToString();
 		}
 

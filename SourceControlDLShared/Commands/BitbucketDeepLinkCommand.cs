@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Community.VisualStudio.Toolkit;
 using Microsoft.VisualStudio.Shell;
 using EnvDTE80;
+//using Task = System.Threading.Tasks.Task;
 using Task = System.Threading.Tasks.Task;
 using SourceControlDeepLinks.Helpers;
 using SharedSrc.Commands;
@@ -71,7 +72,7 @@ namespace SourceControlDeepLinks.Commands
 			var currentBranch = await gitHelper.GetCurrentBranchAsync( workingDirectory );
 
 			var bookmarkedLines = e.InValue as string;
-			var providerHelper = new ProviderHelper( package );
+			var providerHelper = new ProviderHelper();
 			var providerLinkInfo = providerHelper.GetDeepLink
 			(
 				provider,

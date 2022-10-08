@@ -6,10 +6,8 @@ namespace SQLSynSugarAndValidation.ToolWindows
 {
 	public partial class ExtensionOptionsToolWindowControl : UserControl
 	{
-		private ExtensionOptionsState _state;
 		public ExtensionOptionsToolWindowControl()
 		{
-			//_state = state;
 			//DataContext = state;
 			InitializeComponent();
 			Init();

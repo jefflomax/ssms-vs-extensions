@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 using Community.VisualStudio.Toolkit;
 using EnvDTE;
 using EnvDTE80;
-using Microsoft.VisualStudio.Shell;
-using Task = System.Threading.Tasks.Task;
+using ThreadHelper = Microsoft.VisualStudio.Shell.ThreadHelper;
+//using Task = System.Threading.Tasks.Task;
 
 namespace SharedSrc.Helpers
 {

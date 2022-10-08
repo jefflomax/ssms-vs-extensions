@@ -50,7 +50,7 @@ namespace SourceControlDeepLinks.Helpers
 			var repoName = remoteRepoUrl.Substring
 			(
 				startRepoName + 1,
-				endRepoName - startRepoName - 2
+				endRepoName - startRepoName - 1
 			);
 
 			// Get the relative file path within the repo
@@ -62,15 +62,28 @@ namespace SourceControlDeepLinks.Helpers
 				.Replace( '\\', '/' )
 				.Replace( " ", "%20" );
 
+			// Github seems to support only #LNN or #LNN-LNN
+
+
 			var lines = string.IsNullOrEmpty( bookmarkedLines )
 				? string.Empty
-				: $"#{bookmarkedLines}";
+				: FirstBookmark(bookmarkedLines);
 
 			// Build the BB Source URL
 			var deepLink =
-				$"{repoBase}/{repoName}/{branch}/{prefix}/{filePathFragment}{lines}";
+				$"{repoBase}/{repoName}/{prefix}/{branch}/{filePathFragment}{lines}";
 
 			return new ProviderLinkInfo( deepLink, filePathInRepo );
+		}
+
+		private static string FirstBookmark( string bookmarks )
+		{
+			var iComma = bookmarks.IndexOf( ',' );
+			if( iComma == -1 )
+			{
+				return $"#L{bookmarks}";
+			}
+			return $"#L{bookmarks.Substring(0, iComma)}";
 		}
 	}
 }

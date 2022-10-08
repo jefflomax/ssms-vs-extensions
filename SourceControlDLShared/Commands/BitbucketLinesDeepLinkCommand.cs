@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Community.VisualStudio.Toolkit;
 using Microsoft.VisualStudio.Shell;
+//using Task = System.Threading.Tasks.Task;
 using Task = System.Threading.Tasks.Task;
 using EnvDTE;
 using EnvDTE80;
