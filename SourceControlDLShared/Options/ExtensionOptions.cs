@@ -11,7 +11,6 @@ using SharedSrc.Helpers;
 using Community.VisualStudio.Toolkit;
 using SourceControlDeepLinks.Helpers;
 using SourceControlDeepLinks.Options;
-
 using static SourceControlDeepLinks.Resources.Constants;
 using Microsoft.VisualStudio.Shell;
 
@@ -19,6 +18,7 @@ namespace SourceControlDeepLinks
 {
 	// getting apply button
 	// https://docs.microsoft.com/en-us/visualstudio/extensibility/creating-an-options-page?view=vs-2022
+
 	internal partial class OptionsProvider
 	{
 		// See attributes in package class
@@ -36,7 +36,6 @@ namespace SourceControlDeepLinks
 	{
 		// Consider migrating to package
 		private static int _priorProvider = 0;
-		private readonly string _sdl = "SourceControlDeepLinksVS22 ";
 		private readonly bool _debug;
 
 		// The .Instance property in this class is meant to be used
@@ -54,7 +53,7 @@ namespace SourceControlDeepLinks
 			{
 				// This is more than icky
 				// The prior provider (Bitbucket, Github) is stored in a static,
-				// special code reads hidden property "Settings", which has several
+				// special code reads hidden dictionary property "Settings", which has several
 				// fields that change when the Provider is changed.
 				// But before any VS Settings have been saved, we read defaults from
 				// App.Config and DefaultValue properties.
@@ -67,7 +66,11 @@ namespace SourceControlDeepLinks
 				{
 					_priorProvider = 0;
 					// DefaultValue attribute appears to ONLY work on boolean types
-					DefaultValueAttributeHelper.InitializeDefaultProperties( this, nameof( Provider ) );
+					DefaultValueAttributeHelper.InitializeDefaultProperties
+					(
+						this,
+						nameof( Provider ) // assure this one initialized LAST
+					);
 				}
 			} );
 
@@ -123,7 +126,7 @@ namespace SourceControlDeepLinks
 
 		[Category(SourceLink + " Options")]
 		[DisplayName("Bypass Git")]
-		[Description("Recommended - manually process .git to bypass git \"trust developers\"")]
+		[Description("Recommended - manually locate .git folder and parse HEAD and config to bypass git \"trust developers\"")]
 		[DefaultValue(true)]
 		public bool BypassGit { get; set; }
 
@@ -238,17 +241,17 @@ namespace SourceControlDeepLinks
 
 		[Category( SourceLink + " Provider" )]
 		[DisplayName( "Domain" )]
-		[Description( "The domain name for the source url" )]
+		[Description( "The domain name for the source url e.g. yourdomain.com" )]
 		public string ProviderDomain { get; set; }
 
 		[Category( SourceLink + " Provider" )]
 		[DisplayName( "Project Prefix" )]
-		[Description( "Used to locate the project" )]
+		[Description( "Used to locate the project in the origin url" )]
 		public string ProviderProjectPrefix { get; set; }
 
 		[Category( SourceLink + " Provider" )]
 		[DisplayName( "Base Url" )]
-		[Description( "Source Url start '{0}' is domain" )]
+		[Description( "Source Url start (pretocol, subdomain, domain, tld, category) '{0}' is the domain" )]
 		public string ProviderBaseUrl { get; set; }
 
 		[Category( SourceLink + " Provider" )]
@@ -375,12 +378,12 @@ namespace SourceControlDeepLinks
 			string propertyName
 		)
 		{
-			Log( $"SerializeValue {propertyName}" );
-
 			if( propertyName != nameof( Settings ) )
 			{
 				return base.SerializeValue( value, type, propertyName );
 			}
+
+			Log( $"SerializeValue {propertyName}" );
 
 			var sb = new StringBuilder();
 			foreach(var key in Settings
@@ -450,7 +453,7 @@ namespace SourceControlDeepLinks
 		{
 			if( _debug )
 			{
-				Debug.WriteLine( $"{_sdl}{message}" );
+				Debug.WriteLine( $"{LogPrefix}{message}" );
 			}
 		}
 	}

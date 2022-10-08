@@ -105,6 +105,7 @@
 </Commands>
 
 
+
 <!--
   <VisibilityConstraints>
   </VisibilityConstraints>
@@ -133,6 +134,8 @@
 	<!-- /CommandPlacements -->
 
 <Symbols>
+
+    
 	<GuidSymbol name="SourceControlDeepLinks" value="{7a6afcfd-674d-409f-9cde-4e63c1fc73c8}">
 		<!-- <IDSymbol name="MyPasteMenuGroup" value="0x0001" /> -->
 		<IDSymbol name="MyToolMenuFlyout" value="0x0001"/>

@@ -6,3 +6,16 @@ No clean modern way to find ASPX file
 
 IDEAS:
 Slack Integration
+
+
+How could we add to the Git Menu itself?
+
+https://stackoverflow.com/questions/62441417/create-visual-studio-extension-to-add-item-to-git-history-page
+
+https://stackoverflow.com/questions/53936692/visual-studio-extension-with-custom-command-and-subcommands
+
+https://www.visualstudioextensibility.com/
+
+https://learn.microsoft.com/en-us/visualstudio/extensibility/internals/guids-and-ids-of-visual-studio-menus?view=vs-2022
+
+https://github.com/gitextensions/gitextensions.vsix/tree/master/src/Shared

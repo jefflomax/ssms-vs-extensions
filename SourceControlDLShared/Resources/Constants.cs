@@ -1,6 +1,6 @@
 ﻿namespace SourceControlDeepLinks.Resources
 {
-	public static class Constants
+	public static partial class Constants
 	{
 		public const string ExtensionOutputPane = "Source Control Deep Links";
 		public const string OptionsPageCategoryName = "Source Control Deep Links";

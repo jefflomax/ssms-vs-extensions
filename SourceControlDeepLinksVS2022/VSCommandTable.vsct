@@ -37,8 +37,8 @@
 			  <Parent guid="guidSHLMainMenu"
 					  id="IDG_VS_TOOLS_EXT_TOOLS" />
 			<Strings>
-				  <ButtonText>Bitbucket Links</ButtonText>
-				  <ToolTipText>Get link to Bitbucket web</ToolTipText>
+				  <ButtonText>Source Control Deep Links</ButtonText>
+				  <ToolTipText>Get deep link to web</ToolTipText>
 			</Strings>
 		</Menu>
 
@@ -64,7 +64,7 @@
 			<Icon guid="ImageCatalogGuid" id="CloudFile"/>
 			<CommandFlag>IconIsMoniker</CommandFlag>
 			<Strings>
-				<ButtonText>Bitbucket Deep Link</ButtonText>
+				<ButtonText>Deep Link</ButtonText>
 				<LocCanonicalName>.SourceControlDeepLinks.BitBucketLinkCommand</LocCanonicalName>
 				<ToolTipText>Get link to Bitbucket web</ToolTipText>
 			</Strings>
@@ -77,7 +77,7 @@
 			<Icon guid="ImageCatalogGuid" id="WebFile"/>
 			<CommandFlag>IconIsMoniker</CommandFlag>
 			<Strings>
-				<ButtonText>Bitbucket Deep Link with Bookmarks</ButtonText>
+				<ButtonText>Deep Link with Bookmarks</ButtonText>
 				<LocCanonicalName>.SourceControlDeepLinks.BitBucketLinesLinkCommand</LocCanonicalName>
 				<ToolTipText>Get link to Bitbucket web w/bookmarks</ToolTipText>
 			</Strings>
@@ -99,8 +99,23 @@
 
 	</Buttons>
   </Commands>
-
+<!--
+  <CommandPlacements>
+    <CommandPlacement
+			guid="SourceControlDeepLinks"
+			id="BitbucketDeepLinkCommand"
+			priority="0x8000">
+      <Parent guid="Team.Git.OpenCommandPrompt" id="GitMenu"/>
+    </CommandPlacement>    
+  </CommandPlacements>
+-->
   <Symbols>
+    <!--
+    <GuidSymbol name="Team.Git.OpenCommandPrompt" value="{57735D06-C920-4415-A2E0-7D6E6FBDFA99}">
+      <IDSymbol value="0x1012" name="GitMenu" />
+    </GuidSymbol> 
+    -->
+    
 	<GuidSymbol name="SourceControlDeepLinks" value="{70b25cdd-89bd-4332-8e13-242e96a3766b}">
 	  <IDSymbol name="MyMenuGroup" value="0x0004" />
 	  <IDSymbol name="MyCommand" value="0x0100" />
