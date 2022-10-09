@@ -13,11 +13,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)Commands\ValuesPasteCommand.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Options\ExtensionOptions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Options\IExtensionOptions.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Processor\FormatBase.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Processor\FormatSettings.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Processor\LineType.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Processor\StringProcessor.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Processor\TextBuffer.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Resources\Constants.cs" />
   </ItemGroup>
 </Project>

@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <MSBuildAllProjects Condition="'$(MSBuildVersion)' == '' Or '$(MSBuildVersion)' &lt; '16.0'">$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <SharedGUID>0cd91edb-9df6-4d46-9cbb-1d7bf984a8c1</SharedGUID>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration">
+    <Import_RootNamespace>StringProcessorShared</Import_RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)Processor\FormatBase.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Processor\FormatSettings.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Processor\LineType.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Processor\StringProcessor.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Processor\TextBuffer.cs" />
+  </ItemGroup>
+</Project>

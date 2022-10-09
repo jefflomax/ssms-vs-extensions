@@ -23,20 +23,27 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SQLPasteVS2022", "SQLPasteV
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "SQLPasteShared", "SQLPasteShared\SQLPasteShared.shproj", "{373EC34A-F4A0-4CB3-80FB-26884BAE0FB4}"
 EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "StringProcessorShared", "StringProcessorShared\StringProcessorShared.shproj", "{0CD91EDB-9DF6-4D46-9CBB-1D7BF984A8C1}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		StringProcessorShared\StringProcessorShared.projitems*{0cd91edb-9df6-4d46-9cbb-1d7bf984a8c1}*SharedItemsImports = 13
 		SourceControlDLShared\SourceControlDLShared.projitems*{373dcc21-2ff6-40ca-8108-0dc646ca4553}*SharedItemsImports = 13
 		SQLPasteShared\SQLPasteShared.projitems*{373ec34a-f4a0-4cb3-80fb-26884bae0fb4}*SharedItemsImports = 13
 		SharedSrc\SharedSrc.projitems*{3c01a506-2c7d-4960-87c0-3cbac57bc1d5}*SharedItemsImports = 13
 		SharedSrc\SharedSrc.projitems*{4e7f8fb3-33ee-4284-87fe-e78ebddb1406}*SharedItemsImports = 4
 		SourceControlDLShared\SourceControlDLShared.projitems*{4e7f8fb3-33ee-4284-87fe-e78ebddb1406}*SharedItemsImports = 4
 		SharedSrc\SharedSrc.projitems*{5150b5ef-a45d-4413-88d4-74170633301d}*SharedItemsImports = 4
+		SQLPasteShared\SQLPasteShared.projitems*{5150b5ef-a45d-4413-88d4-74170633301d}*SharedItemsImports = 4
+		StringProcessorShared\StringProcessorShared.projitems*{5150b5ef-a45d-4413-88d4-74170633301d}*SharedItemsImports = 4
 		SharedSrc\SharedSrc.projitems*{6124e701-d127-43cc-a495-ee03614f427e}*SharedItemsImports = 4
 		SourceControlDLShared\SourceControlDLShared.projitems*{6124e701-d127-43cc-a495-ee03614f427e}*SharedItemsImports = 4
 		SharedSrc\SharedSrc.projitems*{d298403f-60cc-469c-8346-4d7fa4ee9ab4}*SharedItemsImports = 4
 		SharedSrc\SharedSrc.projitems*{e324ee0e-3065-4319-968d-301f51ac0578}*SharedItemsImports = 4
 		SQLPasteShared\SQLPasteShared.projitems*{e324ee0e-3065-4319-968d-301f51ac0578}*SharedItemsImports = 4
+		StringProcessorShared\StringProcessorShared.projitems*{e324ee0e-3065-4319-968d-301f51ac0578}*SharedItemsImports = 4
 		SharedSrc\SharedSrc.projitems*{f14c5d20-d1c6-4830-b56e-5b6caa329da6}*SharedItemsImports = 4
+		StringProcessorShared\StringProcessorShared.projitems*{f2661ed4-48f7-4f33-a69b-59893d7a9638}*SharedItemsImports = 5
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

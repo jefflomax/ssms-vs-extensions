@@ -47,17 +47,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Commands\ValuesPasteCommand.cs" />
-    <Compile Include="Commands\CsvPasteCommand.cs" />
-    <Compile Include="Options\ExtensionOptions.cs" />
-    <Compile Include="Options\IExtensionOptions.cs" />
-    <Compile Include="Processor\FormatBase.cs" />
-    <Compile Include="Processor\FormatSettings.cs" />
-    <Compile Include="Processor\LineType.cs" />
-    <Compile Include="Processor\TextBuffer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Processor\StringProcessor.cs" />
-    <Compile Include="Resources\Constants.cs" />
     <Compile Include="SQLPastePackage.cs" />
     <Compile Include="source.extension.cs">
       <AutoGen>True</AutoGen>
@@ -111,10 +101,11 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Helpers\" />
     <Folder Include="ToolWindows\" />
   </ItemGroup>
   <Import Project="..\SharedSrc\SharedSrc.projitems" Label="Shared" />
+  <Import Project="..\SQLPasteShared\SQLPasteShared.projitems" Label="Shared" />
+  <Import Project="..\StringProcessorShared\StringProcessorShared.projitems" Label="Shared" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(VSToolsPath)\VSSDK\Microsoft.VsSDK.targets" Condition="'$(VSToolsPath)' != ''" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
