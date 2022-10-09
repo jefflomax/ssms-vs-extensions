@@ -1,0 +1,107 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<CommandTable xmlns="http://schemas.microsoft.com/VisualStudio/2005-10-18/CommandTable" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+  <Extern href="stdidcmd.h"/>
+  <Extern href="vsshlids.h"/>
+  <Include href="KnownImageIds.vsct"/>
+  <Include href="VSGlobals.vsct"/>
+  
+  <!-- TODO: Need to lower flyout in Paste Special group -->
+
+  <Commands package="SQLPaste"> <!-- VS2022 -->
+    <Groups>
+
+      <Group
+        guid="SQLPaste"
+        id="MyPasteMenuGroup"
+        priority="0x0909">
+        <!-- No parent, Command Placment will allow -->
+        <!-- SSMS 18.x to place on EDIT menu -->
+      </Group>
+
+      <Group
+        guid="SQLPaste"
+        id="MyEditFlyoutMenuGroup"
+        priority="0x0909">
+        <Parent guid="SQLPaste" id="EditFlyoutMenu" />
+      </Group>
+
+    </Groups>
+
+    <Menus>
+      <!-- IDG_VS_EDIT_OLEVERBS would give Edit, Objects, Paste as SQL (flyout), children -->
+      <!-- This creates Paste Special, with Paste as SQL flyout inside, children -->
+      <Menu guid="SQLPaste"
+        id="EditFlyoutMenu"
+        priority="0x0909"
+        type="Menu">
+        <Parent guid="guidSHLMainMenu"
+          id="IDG_VS_EDIT_PASTE"/>
+        <Strings>
+          <ButtonText>Paste as SQL</ButtonText>
+          <ToolTipText>Paste as SQL formatted</ToolTipText>
+        </Strings>
+      </Menu>
+    </Menus>    
+
+    <!--This section defines the elements the user can interact with, like a menu command or a button
+        or combo box in a toolbar. -->
+    <Buttons>
+
+      <Button guid="SQLPaste" id="CsvPasteCommand"
+        priority="0x0101"
+        type="Button">
+        <Parent guid="SQLPaste" id="MyEditFlyoutMenuGroup" />
+        <!-- To use ImageCatalogGuid, must follow with CommandFlag IconIsMoniker -->
+        <Icon guid="ImageCatalogGuid" id="Paste" />
+        <CommandFlag>IconIsMoniker</CommandFlag>
+        <Strings>
+          <ButtonText>Paste As CSV</ButtonText>
+          <LocCanonicalName>.VSExtEssential.CsvPasteCommand</LocCanonicalName>
+        </Strings>
+      </Button>
+
+      <Button guid="SQLPaste" id="ValuesPasteCommand"
+        priority="0x0102"
+        type="Button">
+        <Parent guid="SQLPaste" id="MyEditFlyoutMenuGroup" />
+        <Icon guid="ImageCatalogGuid" id="PasteTable" />
+        <CommandFlag>IconIsMoniker</CommandFlag>
+        <Strings>
+          <ButtonText>Paste As Values</ButtonText>
+          <LocCanonicalName>.VSExtEssential.ValuesPasteCommand</LocCanonicalName>
+        </Strings>
+      </Button>
+
+      <!-- No Tool Window for now, just Preferences
+			<Parent guid="SQLPaste" id="MyToolWindow"/>
+		<Button guid="SQLPaste" id="PasteOptionsCommand"
+			priority="0x0103"
+			type="Button">
+			<Parent guid="guidSHLMainMenu" id="IDG_VS_TOOLS_EXT_TOOLS" />
+			<Icon guid="ImageCatalogGuid" id="ToolWindow" />
+			<CommandFlag>IconIsMoniker</CommandFlag>
+			<Strings>
+				<ButtonText>Paste Options</ButtonText>
+				<LocCanonicalName>.Options.PasteOptionsToolWindow</LocCanonicalName>
+			</Strings>
+		</Button>
+		-->
+    </Buttons>
+    </Commands>
+
+  <Symbols>
+    <GuidSymbol name="SQLPaste" value="{ef125253-cc0f-4086-8172-a7858313255f}">
+
+      <IDSymbol name="MyPasteMenuGroup" value="0x0009" />
+
+      <IDSymbol name="EditFlyoutMenu" value="0x0123"/>
+      <IDSymbol name="MyEditFlyoutMenuGroup" value="0x0124"/>
+
+      <IDSymbol name="CsvPasteCommand" value="0x0100" />
+      <IDSymbol name="ValuesPasteCommand" value="0x0101"/>
+
+      <IDSymbol name="PasteOptionsCommand" value="0x0102"/>      
+    </GuidSymbol>
+  </Symbols>
+</CommandTable>

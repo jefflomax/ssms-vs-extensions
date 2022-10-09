@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <MSBuildAllProjects Condition="'$(MSBuildVersion)' == '' Or '$(MSBuildVersion)' &lt; '16.0'">$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <SharedGUID>373ec34a-f4a0-4cb3-80fb-26884bae0fb4</SharedGUID>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration">
+    <Import_RootNamespace>SQLPasteShared</Import_RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)Commands\CsvPasteCommand.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Commands\ValuesPasteCommand.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Options\ExtensionOptions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Options\IExtensionOptions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Resources\Constants.cs" />
+  </ItemGroup>
+</Project>
