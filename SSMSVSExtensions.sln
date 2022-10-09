@@ -19,9 +19,14 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SourceControlDeepLinksVS202
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "SourceControlDLShared", "SourceControlDLShared\SourceControlDLShared.shproj", "{373DCC21-2FF6-40CA-8108-0DC646CA4553}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SQLPasteVS2022", "SQLPasteVS2022\SQLPasteVS2022.csproj", "{E324EE0E-3065-4319-968D-301F51AC0578}"
+EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "SQLPasteShared", "SQLPasteShared\SQLPasteShared.shproj", "{373EC34A-F4A0-4CB3-80FB-26884BAE0FB4}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		SourceControlDLShared\SourceControlDLShared.projitems*{373dcc21-2ff6-40ca-8108-0dc646ca4553}*SharedItemsImports = 13
+		SQLPasteShared\SQLPasteShared.projitems*{373ec34a-f4a0-4cb3-80fb-26884bae0fb4}*SharedItemsImports = 13
 		SharedSrc\SharedSrc.projitems*{3c01a506-2c7d-4960-87c0-3cbac57bc1d5}*SharedItemsImports = 13
 		SharedSrc\SharedSrc.projitems*{4e7f8fb3-33ee-4284-87fe-e78ebddb1406}*SharedItemsImports = 4
 		SourceControlDLShared\SourceControlDLShared.projitems*{4e7f8fb3-33ee-4284-87fe-e78ebddb1406}*SharedItemsImports = 4
@@ -29,6 +34,8 @@ Global
 		SharedSrc\SharedSrc.projitems*{6124e701-d127-43cc-a495-ee03614f427e}*SharedItemsImports = 4
 		SourceControlDLShared\SourceControlDLShared.projitems*{6124e701-d127-43cc-a495-ee03614f427e}*SharedItemsImports = 4
 		SharedSrc\SharedSrc.projitems*{d298403f-60cc-469c-8346-4d7fa4ee9ab4}*SharedItemsImports = 4
+		SharedSrc\SharedSrc.projitems*{e324ee0e-3065-4319-968d-301f51ac0578}*SharedItemsImports = 4
+		SQLPasteShared\SQLPasteShared.projitems*{e324ee0e-3065-4319-968d-301f51ac0578}*SharedItemsImports = 4
 		SharedSrc\SharedSrc.projitems*{f14c5d20-d1c6-4830-b56e-5b6caa329da6}*SharedItemsImports = 4
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -112,6 +119,18 @@ Global
 		{6124E701-D127-43CC-A495-EE03614F427E}.Release|arm64.Build.0 = Release|arm64
 		{6124E701-D127-43CC-A495-EE03614F427E}.Release|x86.ActiveCfg = Release|x86
 		{6124E701-D127-43CC-A495-EE03614F427E}.Release|x86.Build.0 = Release|x86
+		{E324EE0E-3065-4319-968D-301F51AC0578}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E324EE0E-3065-4319-968D-301F51AC0578}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E324EE0E-3065-4319-968D-301F51AC0578}.Debug|arm64.ActiveCfg = Debug|Any CPU
+		{E324EE0E-3065-4319-968D-301F51AC0578}.Debug|arm64.Build.0 = Debug|Any CPU
+		{E324EE0E-3065-4319-968D-301F51AC0578}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{E324EE0E-3065-4319-968D-301F51AC0578}.Debug|x86.Build.0 = Debug|Any CPU
+		{E324EE0E-3065-4319-968D-301F51AC0578}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E324EE0E-3065-4319-968D-301F51AC0578}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E324EE0E-3065-4319-968D-301F51AC0578}.Release|arm64.ActiveCfg = Release|Any CPU
+		{E324EE0E-3065-4319-968D-301F51AC0578}.Release|arm64.Build.0 = Release|Any CPU
+		{E324EE0E-3065-4319-968D-301F51AC0578}.Release|x86.ActiveCfg = Release|Any CPU
+		{E324EE0E-3065-4319-968D-301F51AC0578}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
