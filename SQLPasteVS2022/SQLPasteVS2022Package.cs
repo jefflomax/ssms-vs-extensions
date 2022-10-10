@@ -53,7 +53,7 @@ namespace SQLPaste
 
 		private void OptionsSaved( ExtensionOptions pasteOptions )
 		{
-			ThreadHelper.JoinableTaskFactory.RunAsync( async () =>
+			_ = ThreadHelper.JoinableTaskFactory.RunAsync( async () =>
 			{
 				await ToOutputPaneAsync( $"PasteOptionsSaved {pasteOptions}" );
 			} );

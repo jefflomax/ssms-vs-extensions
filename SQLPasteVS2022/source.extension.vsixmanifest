@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
     <Metadata>
-        <Identity Id="SQLPaste.fbf9fd1f-db9a-4d06-bce7-6df60ec5953a" Version="1.5" Language="en-US" Publisher="Jeff Lomax" />
+        <Identity Id="SQLPaste.fbf9fd1f-db9a-4d06-bce7-6df60ec5953a" Version="1.6" Language="en-US" Publisher="Jeff Lomax" />
         <DisplayName>SQLPaste</DisplayName>
         <Description xml:space="preserve">SQL Paste for VS2022</Description>
         <Icon>Resources\Icon.png</Icon>
