@@ -86,17 +86,15 @@ namespace SourceControlDeepLinks
 		{
 			if( pi == null )
 			{
-				ProviderDomain = string.Empty;
-				ProviderBaseUrl = string.Empty;
-				ProviderProjectPrefix = string.Empty;
+				ProviderOriginRegex = string.Empty;
+				ProviderSourceLinkTemplate = string.Empty;
 				ProviderDefaultBranch = string.Empty;
 				ProviderUseDefaultBranch = false;
 			}
 			else
 			{
-				ProviderDomain = pi.Domain;
-				ProviderBaseUrl = pi.BaseUrl;
-				ProviderProjectPrefix = pi.ProjectPrefix;
+				ProviderOriginRegex = pi.OriginRegex;
+				ProviderSourceLinkTemplate = pi.SourceLinkTemplate;
 				ProviderDefaultBranch = pi.DefaultBranch;
 				ProviderUseDefaultBranch = pi.UseDefaultBranch;
 			}
@@ -213,7 +211,7 @@ namespace SourceControlDeepLinks
 			SourceProvider currentProvider
 		)
 		{
-			var providerHelper = new ProviderHelper();
+			var providerHelper = new ProviderFactory();
 			return providerHelper.GetProviderDefaults( currentProvider );
 		}
 
@@ -229,9 +227,8 @@ namespace SourceControlDeepLinks
 		{
 			providerInfo.Set
 			(
-				ProviderDomain,
-				ProviderBaseUrl,
-				ProviderProjectPrefix,
+				ProviderOriginRegex,
+				ProviderSourceLinkTemplate,
 				ProviderDefaultBranch,
 				ProviderUseDefaultBranch
 			);
@@ -240,19 +237,14 @@ namespace SourceControlDeepLinks
 		}
 
 		[Category( SourceLink + " Provider" )]
-		[DisplayName( "Domain" )]
-		[Description( "The domain name for the source url e.g. yourdomain.com" )]
-		public string ProviderDomain { get; set; }
+		[DisplayName( "Origin Regex" )]
+		[Description( "Extract named captures like domain, profile, repo, from origin URL to insert in Source Link Template" )]
+		public string ProviderOriginRegex { get; set; }
 
 		[Category( SourceLink + " Provider" )]
-		[DisplayName( "Project Prefix" )]
-		[Description( "Used to locate the project in the origin url" )]
-		public string ProviderProjectPrefix { get; set; }
-
-		[Category( SourceLink + " Provider" )]
-		[DisplayName( "Base Url" )]
-		[Description( "Source Url start (pretocol, subdomain, domain, tld, category) '{0}' is the domain" )]
-		public string ProviderBaseUrl { get; set; }
+		[DisplayName( "Source Link Template" )]
+		[Description( "URL template to source, space delimit ' file ' ' branch ' and capture name" )]
+		public string ProviderSourceLinkTemplate { get; set; }
 
 		[Category( SourceLink + " Provider" )]
 		[DisplayName( "Default Branch" )]
@@ -343,12 +335,14 @@ namespace SourceControlDeepLinks
 					var endOfKey = line.IndexOf( ';' );
 					if( endOfKey != -1 )
 					{
-						var key = line.Substring( 0, endOfKey );
+						var (key, version) = KeyAndVersion( line, endOfKey );
+
 						if( KeyInSourceProvider( key ) )
 						{
 							var serialized = line.Substring( endOfKey + 1 );
 							var providerInfo = ProviderInfo.Deserialize
 							(
+								version,
 								serialized
 							);
 
@@ -369,6 +363,19 @@ namespace SourceControlDeepLinks
 			}
 
 			return (object)settings;
+		}
+
+		private static (string Key, char Version) KeyAndVersion( string line, int endOfKey )
+		{
+			var key = line.Substring( 0, endOfKey );
+			var version = '0';
+			if( key[ 0 ] == 'V' )
+			{
+				version = key[ 1 ];
+				key = key.Substring( 2 );
+			}
+
+			return (key, version);
 		}
 
 		protected override string SerializeValue

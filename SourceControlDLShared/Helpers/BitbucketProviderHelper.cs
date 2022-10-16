@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using SharedSrc.Helpers;
 using SourceControlDeepLinks.Options;
+using SourceControlDLSharedNoDep.Helpers;
 
 namespace SourceControlDeepLinks.Helpers
 {
@@ -12,11 +9,11 @@ namespace SourceControlDeepLinks.Helpers
 	{
 		public static ProviderInfo GetDefault( AppSettingsHelper appSettingsHelper )
 		{
-			var domain = appSettingsHelper.GetString( "BitbucketDomain" );
-			var scm = appSettingsHelper.GetString( "SCM" );
-			var baseUrl = appSettingsHelper.GetString( "BitbucketBase" );
+			var originRegex = appSettingsHelper.GetString( "GithubOriginRegex" );
+			var sourceLinkTemplate = appSettingsHelper.GetString( "GithubSourceLinkTemplate" );
+
 			var pi = new ProviderInfo();
-			pi.Set( domain, baseUrl, scm, "", false );
+			pi.Set( originRegex, sourceLinkTemplate, "", false );
 			return pi;
 		}
 
@@ -29,25 +26,13 @@ namespace SourceControlDeepLinks.Helpers
 			string bookmarks
 		)
 		{
-			//var scm = appSettingsHelper.GetString("SCM");
-			//var domain = appSettingsHelper.GetString("BitbucketDomain");
-			//var bitbucketBaseFormat = appSettingsHelper.GetString("BitbucketBase");
-			var scm = providerInfo.ProjectPrefix;
-			var domain = providerInfo.Domain;
-			var bitbucketBaseFormat = providerInfo.BaseUrl;
+			var captures = ProviderHelper.ResolveRegex
+			(
+				providerInfo.OriginRegex,
+				remoteRepoUrl
+			);
 
-			var bitbucketBase = string.Format(bitbucketBaseFormat, domain);
-
-			// Find the BB PROJECT which follows /scm/
-			var projectIndexStart = remoteRepoUrl.IndexOf( scm ) + 5;
-			var projectIndexEnd = remoteRepoUrl.IndexOf( "/", projectIndexStart );
-			var project = remoteRepoUrl
-				.Substring( projectIndexStart, projectIndexEnd - projectIndexStart )
-				.ToUpper();
-
-			// Find the Repository name
-			var endOfRepoNameIndex = remoteRepoUrl.IndexOf( ".git", projectIndexEnd + 1 );
-			var repoName = remoteRepoUrl.Substring( projectIndexEnd+1, endOfRepoNameIndex - projectIndexEnd - 1 );
+			var template = providerInfo.SourceLinkTemplate;
 
 			// Get the relative file path within the repo
 			var filePathInRepo = filePath.Substring(repoRoot.Length + 1);
@@ -62,7 +47,14 @@ namespace SourceControlDeepLinks.Helpers
 				: $"#{bookmarks}";
 
 			// Build the Bitbucket Deep Link Source URL
-			var deepLink = $"{bitbucketBase}/{project}/repos/{repoName}/browse/{filePathFragment}{lines}";
+			var deepLink = ProviderHelper.TranslateUrl
+			(
+				template,
+				"",
+				filePathFragment,
+				lines,
+				captures
+			);
 
 			return new ProviderLinkInfo( deepLink, filePathInRepo );
 		}

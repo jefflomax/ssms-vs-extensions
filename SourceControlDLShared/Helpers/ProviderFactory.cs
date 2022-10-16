@@ -3,10 +3,10 @@ using SourceControlDeepLinks.Options;
 
 namespace SourceControlDeepLinks.Helpers
 {
-	public class ProviderHelper
+	public class ProviderFactory
 	{
 		AppSettingsHelper _appSettings;
-		public ProviderHelper()
+		public ProviderFactory()
 		{
 			_appSettings = new AppSettingsHelper();
 		}

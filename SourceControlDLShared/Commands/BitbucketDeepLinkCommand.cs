@@ -72,7 +72,7 @@ namespace SourceControlDeepLinks.Commands
 			var currentBranch = await gitHelper.GetCurrentBranchAsync( workingDirectory );
 
 			var bookmarkedLines = e.InValue as string;
-			var providerHelper = new ProviderHelper();
+			var providerHelper = new ProviderFactory();
 			var providerLinkInfo = providerHelper.GetDeepLink
 			(
 				provider,
