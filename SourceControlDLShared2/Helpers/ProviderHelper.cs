@@ -29,7 +29,7 @@ namespace SourceControlDLSharedNoDep.Helpers
 				foreach( var groupName in regex.GetGroupNames() )
 				{
 					var group = groups[groupName];
-					if( group.Name.Length > 2 && group.Length > 2 )
+					if( group.Name.Length > 2 && group.Value.Length > 0 )
 					{ 
 						captures.Add( groupName, group.Value );
 					}

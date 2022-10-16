@@ -9,8 +9,8 @@ namespace SourceControlDeepLinks.Helpers
 	{
 		public static ProviderInfo GetDefault( AppSettingsHelper appSettingsHelper )
 		{
-			var originRegex = appSettingsHelper.GetString( "GithubOriginRegex" );
-			var sourceLinkTemplate = appSettingsHelper.GetString( "GithubSourceLinkTemplate" );
+			var originRegex = appSettingsHelper.GetString( "BitbuckerOriginRegex" );
+			var sourceLinkTemplate = appSettingsHelper.GetString( "BitbuckerSourceLinkTemplate" );
 
 			var pi = new ProviderInfo();
 			pi.Set( originRegex, sourceLinkTemplate, "", false );
