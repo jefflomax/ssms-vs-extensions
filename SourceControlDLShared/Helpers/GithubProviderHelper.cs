@@ -1,5 +1,6 @@
 ﻿using SharedSrc.Helpers;
 using SourceControlDeepLinks.Options;
+using SourceControlDLSharedNoDep.Helpers;
 
 namespace SourceControlDeepLinks.Helpers
 {
@@ -7,11 +8,11 @@ namespace SourceControlDeepLinks.Helpers
 	{
 		public static ProviderInfo GetDefault( AppSettingsHelper appSettingsHelper )
 		{
-			var domain = appSettingsHelper.GetString( "GithubDomain" );
-			var scm = appSettingsHelper.GetString( "GithubScm" );
-			var baseUrl = appSettingsHelper.GetString( "GithubBase" );
+			var originRegex = appSettingsHelper.GetString( "GithubOriginRegex" );
+			var sourceLinkTemplate = appSettingsHelper.GetString( "GithubSourceLinkTemplate" );
+
 			var pi = new ProviderInfo();
-			pi.Set( domain, baseUrl, scm, "", false );
+			pi.Set( originRegex, sourceLinkTemplate, "", false );
 			return pi;
 		}
 
@@ -25,13 +26,13 @@ namespace SourceControlDeepLinks.Helpers
 			string currentBranch
 		)
 		{
-			// https://github.com/jefflomax/
-			var domain = providerInfo.Domain;
-			var bitbucketBaseFormat = providerInfo.BaseUrl;
-			var repoBase = string.Format( bitbucketBaseFormat, domain );
+			var captures = ProviderHelper.ResolveRegex
+			(
+				providerInfo.OriginRegex,
+				remoteRepoUrl
+			);
 
-			// blob
-			var prefix = providerInfo.ProjectPrefix;
+			var template = providerInfo.SourceLinkTemplate;
 
 			var branch = "main";
 			if( providerInfo.UseDefaultBranch &&
@@ -44,14 +45,6 @@ namespace SourceControlDeepLinks.Helpers
 				branch = currentBranch;
 			}
 
-			// Find the Repository name
-			var endRepoName = remoteRepoUrl.LastIndexOf( ".git" );
-			var startRepoName = remoteRepoUrl.LastIndexOf( '/', endRepoName - 1 );
-			var repoName = remoteRepoUrl.Substring
-			(
-				startRepoName + 1,
-				endRepoName - startRepoName - 1
-			);
 
 			// Get the relative file path within the repo
 			var filePathInRepo = filePath.Substring( repoRoot.Length + 1 );
@@ -63,18 +56,22 @@ namespace SourceControlDeepLinks.Helpers
 				.Replace( " ", "%20" );
 
 			// Github seems to support only #LNN or #LNN-LNN
-
-
 			var lines = string.IsNullOrEmpty( bookmarkedLines )
 				? string.Empty
 				: FirstBookmark(bookmarkedLines);
 
-			// Build the BB Source URL
-			var deepLink =
-				$"{repoBase}/{repoName}/{prefix}/{branch}/{filePathFragment}{lines}";
+			var deepLink = ProviderHelper.TranslateUrl
+			(
+				template,
+				branch,
+				filePathFragment,
+				lines,
+				captures
+			);
 
 			return new ProviderLinkInfo( deepLink, filePathInRepo );
 		}
+
 
 		private static string FirstBookmark( string bookmarks )
 		{

@@ -1,4 +1,5 @@
-﻿using System;
+﻿#if false
+using System;
 using System.Threading.Tasks;
 using NUnit.Framework;
 using SourceControlDeepLinks.Helpers;
@@ -30,3 +31,4 @@ namespace UnitTests
 		}
 	}
 }
+#endif

@@ -6,6 +6,14 @@
     <IsPackable>false</IsPackable>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <NoWarn>1701;1702,NU1701</NoWarn>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <NoWarn>1701;1702,NU1701</NoWarn>
+  </PropertyGroup>
+
   <ItemGroup>
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.9.4" />
     <PackageReference Include="NUnit" Version="3.13.3" />
@@ -17,10 +25,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\SourceControlDeepLinks\SourceControlDeepLinks.csproj" />
     <ProjectReference Include="..\SQLSynSugarAndValidation\SQLSynSugarAndValidation.csproj" />
   </ItemGroup>
 
   <Import Project="..\StringProcessorShared\StringProcessorShared.projitems" Label="Shared" />
+
+  <Import Project="..\SourceControlDLShared2\SourceControlDLShared2.projitems" Label="Shared" />
 
 </Project>
