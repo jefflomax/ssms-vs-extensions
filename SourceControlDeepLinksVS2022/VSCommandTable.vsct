@@ -66,7 +66,7 @@
 			<Strings>
 				<ButtonText>Deep Link</ButtonText>
 				<LocCanonicalName>.SourceControlDeepLinks.BitBucketLinkCommand</LocCanonicalName>
-				<ToolTipText>Get link to Bitbucket web</ToolTipText>
+				<ToolTipText>Get link to source control website</ToolTipText>
 			</Strings>
 		</Button>
 
@@ -79,7 +79,7 @@
 			<Strings>
 				<ButtonText>Deep Link with Bookmarks</ButtonText>
 				<LocCanonicalName>.SourceControlDeepLinks.BitBucketLinesLinkCommand</LocCanonicalName>
-				<ToolTipText>Get link to Bitbucket web w/bookmarks</ToolTipText>
+				<ToolTipText>Get link to source control website w/bookmarks</ToolTipText>
 			</Strings>
 		</Button>
 
@@ -93,7 +93,7 @@
 			<Strings>
 				<ButtonText>Deep Link Formatted</ButtonText>
 				<LocCanonicalName>.SourceControlDeepLinks.DeepLinkDynamicCommand</LocCanonicalName>
-				<ToolTipText>Enable/Disable Custom Formatted</ToolTipText>
+				<ToolTipText>Enable/Disable Custom Formatting</ToolTipText>
 			</Strings>
 		</Button>
 
