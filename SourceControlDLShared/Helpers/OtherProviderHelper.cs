@@ -1,27 +1,25 @@
-﻿using System;
-using SharedSrc.Helpers;
+﻿using SharedSrc.Helpers;
+using SourceControlDeepLinks.Helpers;
 using SourceControlDeepLinks.Options;
+using SourceControlDLShared.Options;
 using SourceControlDLSharedNoDep.Helpers;
+using System;
+using System.Collections.Generic;
+using System.Text;
 
-namespace SourceControlDeepLinks.Helpers
+namespace SourceControlDLShared.Helpers
 {
-	public static class BitbucketProviderHelper
+	public static class OtherProviderHelper
 	{
 		public static ProviderInfo GetDefault( AppSettingsHelper appSettingsHelper )
 		{
-			var originRegex = appSettingsHelper.GetString( "BitbucketOriginRegex" );
-			var sourceLinkTemplate = appSettingsHelper.GetString( "BitbucketSourceLinkTemplate" );
-			var providerBookmarksType = ProviderInfo.GetBookmarkType
-			(
-				appSettingsHelper.GetString( "BitbucketBookmarksType" )
-			);
-
 			var pi = new ProviderInfo();
-			pi.Set( originRegex, sourceLinkTemplate, "", false, providerBookmarksType );
+			var sourceLinkTemplate = @"https://YOUR_PROVIDER_DOMAIN/ profile / repo /blob/ branch / file";
+			pi.Set( "", sourceLinkTemplate, "", false, BookmarkTypeEnum.All );
 			return pi;
 		}
 
-		public static ProviderLinkInfo GetBitbucketDeepLink
+		public static ProviderLinkInfo GetOtherDeepLink
 		(
 			ProviderInfo providerInfo,
 			string remoteRepoUrl,
@@ -39,14 +37,14 @@ namespace SourceControlDeepLinks.Helpers
 			var template = providerInfo.SourceLinkTemplate;
 
 			// Get the relative file path within the repo
-			var filePathInRepo = filePath.Substring(repoRoot.Length + 1);
+			var filePathInRepo = filePath.Substring( repoRoot.Length + 1 );
 			// BB Urls cannot just be run thru [System.Web.HTTPUtility]::UrlEncode or [System.Runtime] [Uri]::EscapeDataString they do not
 			// support + for space or %2F for /
 			var filePathFragment = filePathInRepo
 				.Replace( '\\', '/' )
 				.Replace( " ", "%20" );
 
-			var lines = string.IsNullOrEmpty(bookmarks)
+			var lines = string.IsNullOrEmpty( bookmarks )
 				? string.Empty
 				: $"#{bookmarks}";
 
@@ -62,5 +60,6 @@ namespace SourceControlDeepLinks.Helpers
 
 			return new ProviderLinkInfo( deepLink, filePathInRepo );
 		}
+
 	}
 }

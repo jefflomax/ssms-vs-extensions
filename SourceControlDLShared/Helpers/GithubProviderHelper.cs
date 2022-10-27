@@ -10,9 +10,13 @@ namespace SourceControlDeepLinks.Helpers
 		{
 			var originRegex = appSettingsHelper.GetString( "GithubOriginRegex" );
 			var sourceLinkTemplate = appSettingsHelper.GetString( "GithubSourceLinkTemplate" );
+			var providerBookmarksType = ProviderInfo.GetBookmarkType
+			(
+				appSettingsHelper.GetString( "GithubBookmarksType" )
+			);
 
 			var pi = new ProviderInfo();
-			pi.Set( originRegex, sourceLinkTemplate, "", false );
+			pi.Set( originRegex, sourceLinkTemplate, "", false, providerBookmarksType );
 			return pi;
 		}
 

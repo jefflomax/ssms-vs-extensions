@@ -13,6 +13,7 @@ using SourceControlDeepLinks.Helpers;
 using SourceControlDeepLinks.Options;
 using static SourceControlDeepLinks.Resources.Constants;
 using Microsoft.VisualStudio.Shell;
+using SourceControlDLShared.Options;
 
 namespace SourceControlDeepLinks
 {
@@ -90,6 +91,7 @@ namespace SourceControlDeepLinks
 				ProviderSourceLinkTemplate = string.Empty;
 				ProviderDefaultBranch = string.Empty;
 				ProviderUseDefaultBranch = false;
+				ProviderBookmarksType = BookmarkTypeEnum.All;
 			}
 			else
 			{
@@ -230,7 +232,8 @@ namespace SourceControlDeepLinks
 				ProviderOriginRegex,
 				ProviderSourceLinkTemplate,
 				ProviderDefaultBranch,
-				ProviderUseDefaultBranch
+				ProviderUseDefaultBranch,
+				ProviderBookmarksType
 			);
 
 			return providerInfo;
@@ -257,7 +260,14 @@ namespace SourceControlDeepLinks
 		[DefaultValue(false)]
 		public bool ProviderUseDefaultBranch { get; set; }
 
-		[Category("Output")]
+		[Category( SourceLink + " Provider" )]
+		[DisplayName( "Bookmark Format" )]
+		[Description( "Supported bookmarks 1  1,2,3... 1-3 1,3" )]
+		[DefaultValue( BookmarkTypeEnum.All )]
+		[TypeConverter( typeof( EnumConverter ) )]
+		public BookmarkTypeEnum ProviderBookmarksType { get; set; }
+
+		[ Category("Output")]
 		[DisplayName("Output Pane")]
 		[Description("View, Output, select \"show output from\": " + ExtensionOutputPane)]
 		public bool OutputToPane { get; set; } = true;

@@ -1,5 +1,6 @@
 ﻿using SharedSrc.Helpers;
 using SourceControlDeepLinks.Options;
+using SourceControlDLShared.Helpers;
 
 namespace SourceControlDeepLinks.Helpers
 {
@@ -23,6 +24,10 @@ namespace SourceControlDeepLinks.Helpers
 
 				case SourceProvider.GitHub:
 					return GithubProviderHelper.GetDefault( _appSettings );
+
+				case SourceProvider.Other:
+					return OtherProviderHelper.GetDefault(_appSettings );
+
 			}
 			return new ProviderInfo();
 		}
@@ -53,6 +58,16 @@ namespace SourceControlDeepLinks.Helpers
 
 				case SourceProvider.BitbucketServer:
 					return BitbucketProviderHelper.GetBitbucketDeepLink
+					(
+						providerInfo,
+						remoteOrigin,
+						repoRoot,
+						activeFilePath,
+						bookmarkedLines
+					);
+
+				case SourceProvider.Other:
+					return OtherProviderHelper.GetOtherDeepLink
 					(
 						providerInfo,
 						remoteOrigin,

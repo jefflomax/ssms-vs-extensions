@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SourceControlDLShared.Options;
+using System;
 
 namespace SourceControlDeepLinks.Options
 {
@@ -18,13 +19,15 @@ namespace SourceControlDeepLinks.Options
 			string originRegex,
 			string sourceLinkTemplate,
 			string defaultBranch,
-			bool useDefaultBranch
+			bool useDefaultBranch,
+			BookmarkTypeEnum providerBookmarksType
 		)
 		{
 			OriginRegex = originRegex;
 			SourceLinkTemplate = sourceLinkTemplate;
 			DefaultBranch = defaultBranch;
 			UseDefaultBranch = useDefaultBranch;
+			ProviderBookmarksType = providerBookmarksType;
 		}
 		public void Set( ProviderInfo from )
 		{
@@ -32,6 +35,7 @@ namespace SourceControlDeepLinks.Options
 			SourceLinkTemplate = from.SourceLinkTemplate;
 			DefaultBranch = from.DefaultBranch;
 			UseDefaultBranch = from.UseDefaultBranch;
+			ProviderBookmarksType = from.ProviderBookmarksType;
 		}
 
 
@@ -39,16 +43,28 @@ namespace SourceControlDeepLinks.Options
 		public string SourceLinkTemplate { get; private set; }
 		public string DefaultBranch { get; private set; }
 		public bool UseDefaultBranch { get; private set; }
+		public BookmarkTypeEnum ProviderBookmarksType { get; private set; }
 
+		public static BookmarkTypeEnum GetBookmarkType( string enumName )
+		{
+			var type = BookmarkTypeEnum.All;
+			if( Enum.TryParse<BookmarkTypeEnum>( enumName, out var bookmarkType ) )
+			{
+				type = bookmarkType;
+			}
+			return type;
+		}
 
 		public string Serialize(string key)
 		{
 			// TODO: encode ',' to protect RegEx
-			return $"V1{key};{OriginRegex},{SourceLinkTemplate},{DefaultBranch},{UseDefaultBranch}";
+			return $"V1{key};{OriginRegex},{SourceLinkTemplate},{DefaultBranch},{UseDefaultBranch},{ProviderBookmarksType}";
 		}
 		public static ProviderInfo Deserialize( char version, string s )
 		{
 			var pi = new ProviderInfo();
+			pi.ProviderBookmarksType = BookmarkTypeEnum.All;
+
 			var fields = s.Split( new char[]{','}, StringSplitOptions.None );
 
 			if( version == '0' )
@@ -56,7 +72,6 @@ namespace SourceControlDeepLinks.Options
 				return Version0(pi, fields);
 			}
 			return Version1( pi, fields );
-
 		}
 
 		private static ProviderInfo Version1( ProviderInfo pi, string[] fields )
@@ -79,6 +94,10 @@ namespace SourceControlDeepLinks.Options
 			{
 				Boolean.TryParse( fields[ 3 ], out var b );
 				pi.UseDefaultBranch = b;
+			}
+			if( l > 4 )
+			{
+				pi.ProviderBookmarksType = GetBookmarkType( fields[4] );
 			}
 			return pi;
 		}
