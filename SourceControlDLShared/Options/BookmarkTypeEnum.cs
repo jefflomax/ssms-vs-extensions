@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace SourceControlDLShared.Options
+namespace SourceControlDeepLinks.Options
 {
 	public enum BookmarkTypeEnum
 	{

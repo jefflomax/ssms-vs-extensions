@@ -1,7 +1,6 @@
 ﻿using SharedSrc.Helpers;
 using SourceControlDeepLinks.Helpers;
 using SourceControlDeepLinks.Options;
-using SourceControlDLShared.Options;
 using SourceControlDLSharedNoDep.Helpers;
 using System;
 using System.Collections.Generic;
@@ -11,10 +10,11 @@ namespace SourceControlDLShared.Helpers
 {
 	public static class OtherProviderHelper
 	{
+#if false
 		public static ProviderInfo GetDefault( AppSettingsHelper appSettingsHelper )
 		{
 			var pi = new ProviderInfo();
-			var sourceLinkTemplate = @"https://YOUR_PROVIDER_DOMAIN/ profile / repo /blob/ branch / file";
+			var sourceLinkTemplate = @"https:// domain / profile / repo /blob/ branch / file";
 			pi.Set( "", sourceLinkTemplate, "", false, BookmarkTypeEnum.All );
 			return pi;
 		}
@@ -60,6 +60,6 @@ namespace SourceControlDLShared.Helpers
 
 			return new ProviderLinkInfo( deepLink, filePathInRepo );
 		}
-
+#endif
 	}
 }

@@ -6,6 +6,7 @@ namespace SourceControlDeepLinks.Helpers
 {
 	public static class GithubProviderHelper
 	{
+#if false
 		public static ProviderInfo GetDefault( AppSettingsHelper appSettingsHelper )
 		{
 			var originRegex = appSettingsHelper.GetString( "GithubOriginRegex" );
@@ -86,5 +87,6 @@ namespace SourceControlDeepLinks.Helpers
 			}
 			return $"#L{bookmarks.Substring(0, iComma)}";
 		}
+#endif
 	}
 }

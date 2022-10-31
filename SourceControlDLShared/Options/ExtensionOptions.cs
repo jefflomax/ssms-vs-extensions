@@ -13,12 +13,11 @@ using SourceControlDeepLinks.Helpers;
 using SourceControlDeepLinks.Options;
 using static SourceControlDeepLinks.Resources.Constants;
 using Microsoft.VisualStudio.Shell;
-using SourceControlDLShared.Options;
 
 namespace SourceControlDeepLinks
 {
-	// getting apply button
-	// https://docs.microsoft.com/en-us/visualstudio/extensibility/creating-an-options-page?view=vs-2022
+
+	// GENERAL Options page
 
 	internal partial class OptionsProvider
 	{
@@ -27,16 +26,12 @@ namespace SourceControlDeepLinks
 		public class ExtensionOptionsProv : BaseOptionPage<ExtensionOptions> 
 		{
 		}
-
 	}
-
-	// TODO: Update Settings on Save
 
 	public class ExtensionOptions
 		: BaseOptionModel<ExtensionOptions>, IExtensionOptions
 	{
-		// Consider migrating to package
-		private static int _priorProvider = 0;
+		// private static int _priorProvider = 0;
 		private readonly bool _debug;
 
 		// The .Instance property in this class is meant to be used
@@ -44,6 +39,7 @@ namespace SourceControlDeepLinks
 
 		public ExtensionOptions()
 		{
+#if false
 			Settings = new Dictionary<string, ProviderInfo>();
 			SetFormToProviderFields(null); // Clear
 
@@ -74,11 +70,11 @@ namespace SourceControlDeepLinks
 					);
 				}
 			} );
-
+#endif
 			_debug = true;
 		}
 
-
+#if false
 		/// <summary>
 		/// As provider changges, restore a set of form fields
 		/// </summary>
@@ -101,49 +97,53 @@ namespace SourceControlDeepLinks
 				ProviderUseDefaultBranch = pi.UseDefaultBranch;
 			}
 		}
+#endif
 
+#if false
 		// 'ForceSettingDictionaryFirst' reorders so this hydrates first
 		// TODO: Consider TypeConverter instead
 		private Dictionary<string, ProviderInfo> _settings;
-		[Browsable( false )]
+		[Browsable( false )] // HIDDEN property
 		public Dictionary<string, ProviderInfo> Settings
 		{
 			get { return _settings; }
 			set { _settings = value; }
 		}
+#endif
 
-		[Category( SourceLink + " Options" )]
+		[Category( SourceLink + OptionsName )]
 		[DisplayName( "Diagnostic Options" )]
 		[Description( "Extra logging to output pane" )]
 		[DefaultValue(false)]
 		public bool DiagnosticOutput { get; set; }
 
-		[Category(SourceLink + " Options")]
+		[Category( SourceLink + OptionsName )]
 		[DisplayName("Git Executable")]
 		[Description("Fully qualified path to git.exe")]
 		[DefaultValue( @"C:\Program Files\Git\cmd\git.exe" )]
 		public string GitExecutable { get; set; }
 
-		[Category(SourceLink + " Options")]
+		[Category( SourceLink + OptionsName )]
 		[DisplayName("Bypass Git")]
 		[Description("Recommended - manually locate .git folder and parse HEAD and config to bypass git \"trust developers\"")]
 		[DefaultValue(true)]
 		public bool BypassGit { get; set; }
 
-		[Category(SourceLink + " Options")]
+		[Category( SourceLink + OptionsName )]
 		[DisplayName("Format")]
 		[Description("Format for Slack or other markdown link")]
 		[DefaultValue(false)]
 		public bool Format { get; set; }
 
-		[Category(SourceLink + " Options")]
+		[Category( SourceLink + OptionsName )]
 		[DisplayName("Format String")]
 		[Description("{0} url {1} path {2} file {3} extension")]
 		[DefaultValue( "<{0}|{2}{3}>" )]
 		public string FormatString { get; set; }
 
+#if false
 		private SourceProvider _sourceProvider;
-		[Category( SourceLink + " Provider" )]
+		[Category( SourceLink + OptionsName )]
 		[DisplayName( "Provider" )]
 		[Description( "Source Provider" )]
 		[DefaultValue( SourceProvider.BitbucketServer )] // Neither 1 or SourceProvider.BitbucketServer worked
@@ -239,35 +239,35 @@ namespace SourceControlDeepLinks
 			return providerInfo;
 		}
 
-		[Category( SourceLink + " Provider" )]
+		[Category( SourceLink + "Provider" )]
 		[DisplayName( "Origin Regex" )]
 		[Description( "Extract named captures like domain, profile, repo, from origin URL to insert in Source Link Template" )]
 		public string ProviderOriginRegex { get; set; }
 
-		[Category( SourceLink + " Provider" )]
+		[Category( SourceLink + "Provider" )]
 		[DisplayName( "Source Link Template" )]
 		[Description( "URL template to source, space delimit ' file ' ' branch ' and capture name" )]
 		public string ProviderSourceLinkTemplate { get; set; }
 
-		[Category( SourceLink + " Provider" )]
+		[Category( SourceLink + "Provider" )]
 		[DisplayName( "Default Branch" )]
 		[Description( "Default branch (main, master, develop...)" )]
 		public string ProviderDefaultBranch { get; set; }
 
-		[Category( SourceLink + " Provider" )]
+		[Category( SourceLink + "Provider" )]
 		[DisplayName( "Use Default Branch" )]
 		[Description( "Use default instead of current branch" )]
 		[DefaultValue(false)]
 		public bool ProviderUseDefaultBranch { get; set; }
 
-		[Category( SourceLink + " Provider" )]
+		[Category( SourceLink + "Provider" )]
 		[DisplayName( "Bookmark Format" )]
 		[Description( "Supported bookmarks 1  1,2,3... 1-3 1,3" )]
 		[DefaultValue( BookmarkTypeEnum.All )]
 		[TypeConverter( typeof( EnumConverter ) )]
 		public BookmarkTypeEnum ProviderBookmarksType { get; set; }
-
-		[ Category("Output")]
+#endif
+		[Category("Output")]
 		[DisplayName("Output Pane")]
 		[Description("View, Output, select \"show output from\": " + ExtensionOutputPane)]
 		public bool OutputToPane { get; set; } = true;
@@ -308,12 +308,10 @@ namespace SourceControlDeepLinks
 				sb.Append($"; Format: {FormatString}");
 			}
 
-			sb.Append( $"; Provider: {Provider}" );
-
-			return sb.ToString();
-			
+			return sb.ToString();	
 		}
 
+#if false
 		/* We can't auto-serialize a dictionary ??? */
 		protected override object DeserializeValue
 		(
@@ -460,10 +458,11 @@ namespace SourceControlDeepLinks
 		{
 			var isInEnum =
 				key == SourceProvider.BitbucketServer.ToString() ||
-				key == SourceProvider.GitHub.ToString();
+				key == SourceProvider.GitHub.ToString() ||
+				key == SourceProvider.Other.ToString() ;
 			return isInEnum;
 		}
-
+#endif
 
 		[Conditional( "DEBUG" )]
 		private void Log( string message )
