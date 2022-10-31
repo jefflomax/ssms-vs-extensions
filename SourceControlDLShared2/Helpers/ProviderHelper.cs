@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SourceControlDeepLinks.Options;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -44,7 +45,6 @@ namespace SourceControlDLSharedNoDep.Helpers
 			string template,
 			string branch,
 			string filePathFragment,
-			string lines,
 			Dictionary<string, string> captures
 		)
 		{
@@ -94,6 +94,31 @@ namespace SourceControlDLSharedNoDep.Helpers
 			}
 
 			return sb.ToString();
+		}
+
+
+		public static string AddBookmarks
+		(
+			BookmarkTypeEnum bookmarkType,
+			string deepLink,
+			string lines
+		)
+		{
+			var bookmarks = lines;
+			if( bookmarkType == BookmarkTypeEnum.Single )
+			{
+				bookmarks = FirstBookmark( bookmarks );
+			}
+			return deepLink + bookmarks;
+		}
+		private static string FirstBookmark( string bookmarks )
+		{
+			var iComma = bookmarks.IndexOf( ',' );
+			if( iComma == -1 )
+			{
+				return $"#L{bookmarks}";
+			}
+			return $"#L{bookmarks.Substring( 0, iComma )}";
 		}
 	}
 }

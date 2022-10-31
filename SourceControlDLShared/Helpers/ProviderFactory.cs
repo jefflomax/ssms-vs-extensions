@@ -7,31 +7,6 @@ namespace SourceControlDeepLinks.Helpers
 {
 	public class ProviderFactory
 	{
-#if false
-		AppSettingsHelper _appSettings;
-		public ProviderFactory()
-		{
-			_appSettings = new AppSettingsHelper();
-		}
-
-		public ProviderInfo GetProviderDefaults
-		(
-			SourceProvider sourceProvider
-		)
-		{
-			switch( sourceProvider )
-			{
-				case SourceProvider.BitbucketServer:
-					return BitbucketProviderHelper.GetDefault( _appSettings );
-
-				case SourceProvider.GitHub:
-					return GithubProviderHelper.GetDefault( _appSettings );
-
-			}
-			return new ProviderInfo();
-		}
-#endif
-
 		public ProviderLinkInfo GetDeepLink
 		(
 			ProviderInfo providerInfo,
@@ -69,7 +44,7 @@ namespace SourceControlDeepLinks.Helpers
 				.Replace( '\\', '/' )
 				.Replace( " ", "%20" );
 
-			var lines = string.IsNullOrEmpty( bookmarkedLines )
+			var allLines = string.IsNullOrEmpty( bookmarkedLines )
 				? string.Empty
 				: $"#{bookmarkedLines}";
 
@@ -79,11 +54,17 @@ namespace SourceControlDeepLinks.Helpers
 				template,
 				branch,
 				filePathFragment,
-				lines,
 				captures
 			);
 
-			return new ProviderLinkInfo( deepLink, filePathInRepo );
+			var deepLinkWithBookmarks = ProviderHelper.AddBookmarks
+			(
+				providerInfo.ProviderBookmarksType,
+				deepLink,
+				allLines
+			);
+
+			return new ProviderLinkInfo( deepLinkWithBookmarks, filePathInRepo );
 		}
 	}
 }
