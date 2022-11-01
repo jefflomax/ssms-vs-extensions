@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
     <Metadata>
-        <Identity Id="SourceControlDeepLinks.ea8550af-3db2-42ff-87f0-49af5d25b409" Version="0.8.5" Language="en-US" Publisher="Jeff Lomax" />
+        <Identity Id="SourceControlDeepLinks.ea8550af-3db2-42ff-87f0-49af5d25b409" Version="0.8.7" Language="en-US" Publisher="Jeff Lomax" />
         <DisplayName>SourceControlDeepLinksV2</DisplayName>
         <Description xml:space="preserve">Source Control Deep Links for VS 2022
 </Description>

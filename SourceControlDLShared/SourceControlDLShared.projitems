@@ -20,7 +20,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\ProviderLinkInfo.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\SettingsHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Options\AllOptions.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Options\BookmarkTypeEnum.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Options\ExtensionOptions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Options\IExtensionOptions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Options\Provider1Options.cs" />

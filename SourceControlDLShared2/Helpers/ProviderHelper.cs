@@ -31,7 +31,7 @@ namespace SourceControlDLSharedNoDep.Helpers
 				{
 					var group = groups[groupName];
 					if( group.Name.Length > 2 && group.Value.Length > 0 )
-					{ 
+					{
 						captures.Add( groupName, group.Value );
 					}
 				}
@@ -96,7 +96,6 @@ namespace SourceControlDLSharedNoDep.Helpers
 			return sb.ToString();
 		}
 
-
 		public static string AddBookmarks
 		(
 			BookmarkTypeEnum bookmarkType,
@@ -111,6 +110,7 @@ namespace SourceControlDLSharedNoDep.Helpers
 			}
 			return deepLink + bookmarks;
 		}
+
 		private static string FirstBookmark( string bookmarks )
 		{
 			var iComma = bookmarks.IndexOf( ',' );
