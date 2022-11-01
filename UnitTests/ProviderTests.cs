@@ -40,7 +40,6 @@ namespace UnitTests
 				template,
 				branch,
 				filePathFragment,
-				lines,
 				captures
 			);
 
@@ -78,7 +77,6 @@ namespace UnitTests
 				template,
 				branch,
 				filePathFragment,
-				lines,
 				captures
 			);
 
