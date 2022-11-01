@@ -11,6 +11,7 @@ using static SourceControlDeepLinks.Resources.Constants;
 using Microsoft.VisualStudio.Shell.Interop;
 using Microsoft.VisualStudio.Settings;
 using SourceControlDeepLinks.Helpers;
+using SourceControlDeepLinks.Options;
 
 namespace SourceControlDeepLinks
 {
@@ -20,6 +21,12 @@ namespace SourceControlDeepLinks
 	[Guid(PackageGuids.SourceControlDeepLinksString)]
 	[ProvideOptionPage( typeof( OptionsProvider.ExtensionOptionsProv ), OptionsPageCategoryName, OptionsPageName, 0, 0, true )]
 	[ProvideProfile( typeof( OptionsProvider.ExtensionOptionsProv ), OptionsPageCategoryName, OptionsPageName, 0, 0, true )]
+	[ProvideOptionPage( typeof( OptionsProvider1.Provider1OptionsProv ), OptionsPageCategoryName, Options1PageName, 0, 0, true, Sort = 1 )]
+	[ProvideProfile( typeof( OptionsProvider1.Provider1OptionsProv ), OptionsPageCategoryName, Options1PageName, 0, 0, true )]
+	[ProvideOptionPage( typeof( OptionsProvider2.Provider2OptionsProv ), OptionsPageCategoryName, Options2PageName, 0, 0, true, Sort = 2 )]
+	[ProvideProfile( typeof( OptionsProvider2.Provider2OptionsProv ), OptionsPageCategoryName, Options2PageName, 0, 0, true )]
+	[ProvideOptionPage( typeof( OptionsProvider3.Provider3OptionsProv ), OptionsPageCategoryName, Options3PageName, 0, 0, true, Sort = 3 )]
+	[ProvideProfile( typeof( OptionsProvider3.Provider3OptionsProv ), OptionsPageCategoryName, Options3PageName, 0, 0, true )]
 	public sealed class SourceControlDeepLinksPackage 
 		: BasePackage<ExtensionOptions>, IBasePackage<ExtensionOptions>
 	{
@@ -35,12 +42,8 @@ namespace SourceControlDeepLinks
 			await this.RegisterCommandsAsync();
 			this.RegisterToolWindows();
 
-			var settingsHelper = new SettingsHelper( typeof( ExtensionOptions ) );
-			var propertyInSettings = nameof( ExtensionOptions.Provider );
-			if( ! await settingsHelper.PropertyExistsAsync( propertyInSettings ) )
-			{
-				await outputWindowPane.WriteLineAsync( $"Property {propertyInSettings} not found in Setting" );
-			}
+			// TODO: Switch pattern to Migrate settings from app.config
+			// on first launch
 
 			_extensionOutputPaneName = ExtensionOutputPane;
 			_state = new ExtensionOptions();
@@ -49,10 +52,12 @@ namespace SourceControlDeepLinks
 
 			await LogStartupInformationAsync( ExtensionOutputPane, Vsix.Version );
 
-			ExtensionOptions.Saved += OptionsSaved;
+			// Could hook all 4 settings to notify on save
+			// ExtensionOptions.Saved += OptionsSaved;
 		}
 		public ExtensionOptions GetOptionsState() => _state;
 
+#if false
 		private void OptionsSaved( ExtensionOptions extensionOptions )
 		{
 			_ = ThreadHelper.JoinableTaskFactory.RunAsync( async () =>
@@ -60,10 +65,21 @@ namespace SourceControlDeepLinks
 				await ToOutputPaneAsync( $"{ExtensionOutputPane} {extensionOptions}" );
 			} );
 		}
+#endif
 
 		public override async Task<ExtensionOptions> GetLiveSettingsInstanceAsync()
 		{
 			return await ExtensionOptions.GetLiveInstanceAsync();
+		}
+
+		public async Task<AllOptions> GetLiveOptionsInstanceAsync()
+		{
+			var general = await ExtensionOptions.GetLiveInstanceAsync();
+			var provider1 = await Provider1Options.GetLiveInstanceAsync();
+			var provider2 = await Provider2Options.GetLiveInstanceAsync();
+			var provider3 = await Provider3Options.GetLiveInstanceAsync();
+			var allOptions = new AllOptions(general, provider1, provider2, provider3);
+			return allOptions;
 		}
 	}
 }

@@ -15,11 +15,17 @@
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\BitbucketProviderHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\GitHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\GithubProviderHelper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Helpers\OtherProviderHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\ProviderFactory.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\ProviderLinkInfo.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\SettingsHelper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Options\AllOptions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Options\ExtensionOptions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Options\IExtensionOptions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Options\Provider1Options.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Options\Provider2Options.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Options\Provider3Options.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Options\ProviderBase.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Options\ProviderInfo.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Options\SourceProviderEnum.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Resources\Constants.cs" />

@@ -6,13 +6,18 @@ namespace SourceControlDeepLinks.Helpers
 {
 	public static class GithubProviderHelper
 	{
+#if false
 		public static ProviderInfo GetDefault( AppSettingsHelper appSettingsHelper )
 		{
 			var originRegex = appSettingsHelper.GetString( "GithubOriginRegex" );
 			var sourceLinkTemplate = appSettingsHelper.GetString( "GithubSourceLinkTemplate" );
+			var providerBookmarksType = ProviderInfo.GetBookmarkType
+			(
+				appSettingsHelper.GetString( "GithubBookmarksType" )
+			);
 
 			var pi = new ProviderInfo();
-			pi.Set( originRegex, sourceLinkTemplate, "", false );
+			pi.Set( originRegex, sourceLinkTemplate, "", false, providerBookmarksType );
 			return pi;
 		}
 
@@ -82,5 +87,6 @@ namespace SourceControlDeepLinks.Helpers
 			}
 			return $"#L{bookmarks.Substring(0, iComma)}";
 		}
+#endif
 	}
 }

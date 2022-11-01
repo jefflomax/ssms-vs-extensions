@@ -19,7 +19,7 @@ namespace SourceControlDeepLinks.Helpers
 			_collectionName = baseOptionModelType.FullName;
 		}
 
-		public async Task<bool> PropertyExistsAsync( string property )
+		public async Task<bool> PropertyExistsAsync( Type collectionType, string property )
 		{
 			await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
 #pragma warning disable CVST001 // Cast interop services to their specific type
@@ -27,7 +27,7 @@ namespace SourceControlDeepLinks.Helpers
 #pragma warning restore CVST001 // Cast interop services to their specific type
 			var scope = SettingsScope.UserSettings;
 			manager.GetReadOnlySettingsStore( (uint)scope, out var vsSettingsStore );
-			var collectionName = typeof( ExtensionOptions ).FullName;
+			var collectionName = collectionType.FullName;
 			vsSettingsStore.PropertyExists
 			(
 				collectionName,

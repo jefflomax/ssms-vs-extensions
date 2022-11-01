@@ -17,6 +17,7 @@ using SharedSrc.Helpers;
 using SharedSrc.Interfaces;
 using Microsoft.VisualStudio.TextManager.Interop;
 using Microsoft.VisualStudio;
+using SourceControlDeepLinks.Options;
 
 namespace SourceControlDeepLinks.Commands
 {
@@ -28,7 +29,11 @@ namespace SourceControlDeepLinks.Commands
 		protected override async Task ExecuteAsync(OleMenuCmdEventArgs e)
 		{
 			var package = GetPackage;
-			var state = package.GetOptionsState();
+
+			var allOptions = await package.GetLiveOptionsInstanceAsync();
+			var generalOptions = allOptions.General;
+
+			//var state = package.GetOptionsState();
 			var nl = Environment.NewLine;
 			var sbDiagnostics = new StringBuilder();
 
@@ -52,10 +57,10 @@ namespace SourceControlDeepLinks.Commands
 			var extension = Path.GetExtension( activeFilePath );
 			var workingDirectory = Path.GetDirectoryName( activeFilePath );
 
-			var git = state.GitExecutable;
-			var gitHelper = new GitHelper( git, state.BypassGit );
+			var gitExecutable = generalOptions.GitExecutable;
+			var bypassGit = generalOptions.BypassGit;
 
-			var provider = state.Provider;
+			var gitHelper = new GitHelper( gitExecutable, bypassGit );
 
 			var repoRoot = await gitHelper.GetRepositoryRootAsync( workingDirectory );
 			if( string.IsNullOrEmpty( repoRoot ) )
@@ -71,12 +76,13 @@ namespace SourceControlDeepLinks.Commands
 			var remoteOrigin = await gitHelper.GetRemoteOriginUrlAsync( workingDirectory );
 			var currentBranch = await gitHelper.GetCurrentBranchAsync( workingDirectory );
 
+			var providerInfo = allOptions.GetMatchingProvider( remoteOrigin );
+
 			var bookmarkedLines = e.InValue as string;
 			var providerHelper = new ProviderFactory();
 			var providerLinkInfo = providerHelper.GetDeepLink
 			(
-				provider,
-				state.GetProviderInfoFromForm(),
+				providerInfo,
 				remoteOrigin,
 				repoRoot,
 				activeFilePath,
@@ -88,7 +94,6 @@ namespace SourceControlDeepLinks.Commands
 			{
 				await package.ToOutputPaneAsync
 				(
-					$"Unable to retrieve deep link {provider.ToString()}{nl}" +
 					$"{repoRoot}{nl}" +
 					$"{remoteOrigin}{nl}" +
 					$"{activeFilePath}{nl}"
@@ -99,7 +104,7 @@ namespace SourceControlDeepLinks.Commands
 			var deepLink = providerLinkInfo.DeepLink;
 			var pathInRepo = providerLinkInfo.PathInRepo;
 
-			if( state.DiagnosticOutput )
+			if( generalOptions.DiagnosticOutput )
 			{
 				await package.ToOutputPaneAsync
 				(
@@ -108,18 +113,18 @@ namespace SourceControlDeepLinks.Commands
 				);
 			}
 
-			if( state.Format )
+			if( generalOptions.Format )
 			{
 				// {0} url {1} path {2} file {3} extension
-				deepLink = string.Format( state.FormatString, deepLink, pathInRepo, file, extension );
+				deepLink = string.Format( generalOptions.FormatString, deepLink, pathInRepo, file, extension );
 			}
 
-			if( state.OutputToClipboard )
+			if( generalOptions.OutputToClipboard )
 			{
 				ClipboardHelper.SetData( deepLink );
 			}
 
-			if( state.OutputToPane )
+			if( generalOptions.OutputToPane )
 			{
 				await package.ToOutputPaneAsync( deepLink );
 			}
