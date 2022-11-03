@@ -1,7 +1,6 @@
 ﻿using SharedSrc.Helpers;
 using SourceControlDeepLinks.Options;
-using SourceControlDLShared.Helpers;
-using SourceControlDLSharedNoDep.Helpers;
+using SourceControlDLShared2.Helpers;
 
 namespace SourceControlDeepLinks.Helpers
 {

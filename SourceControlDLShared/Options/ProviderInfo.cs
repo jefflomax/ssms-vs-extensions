@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SourceControlDLShared2.Options;
+using System;
 
 namespace SourceControlDeepLinks.Options
 {
@@ -46,107 +47,6 @@ namespace SourceControlDeepLinks.Options
 			}
 			return type;
 		}
-#if false
-		public string Serialize(string key)
-		{
-			// TODO: encode ',' to protect RegEx
-			return $"V2{key};{OriginRegex},{SourceLinkTemplate},{DefaultBranch},{UseDefaultBranch},{ProviderBookmarksType}";
-		}
-		public static ProviderInfo Deserialize( char version, string s )
-		{
-			var pi = new ProviderInfo();
-			pi.ProviderBookmarksType = BookmarkTypeEnum.All;
 
-			var fields = s.Split( new char[]{','}, StringSplitOptions.None );
-
-			if( version == '0' )
-			{
-				return Version0(pi, fields);
-			}
-			else if ( version == '1' )
-			{
-				return Version1(pi, fields);
-			}
-			return Version2( pi, fields );
-		}
-
-		private static ProviderInfo Version2( ProviderInfo pi, string[] fields )
-		{
-			var l = fields.Length;
-
-			if( l > 0 )
-			{
-				pi.OriginRegex = fields[ 0 ];
-			}
-			if( l > 1 )
-			{
-				pi.SourceLinkTemplate = fields[ 1 ];
-			}
-			if( l > 2 )
-			{
-				pi.DefaultBranch = fields[ 2 ];
-			}
-			if( l > 3 )
-			{
-				Boolean.TryParse( fields[ 3 ], out var b );
-				pi.UseDefaultBranch = b;
-			}
-			if( l > 4 )
-			{
-				pi.ProviderBookmarksType = GetBookmarkType( fields[ 4 ] );
-			}
-			return pi;
-		}
-
-		private static ProviderInfo Version1( ProviderInfo pi, string[] fields )
-		{
-			var l = fields.Length;
-
-			if( l > 0 )
-			{
-				pi.OriginRegex = fields[0];
-			}
-			if( l > 1 )
-			{
-				pi.SourceLinkTemplate = fields[ 1 ];
-			}
-			if( l > 2 )
-			{
-				pi.DefaultBranch = fields[ 2 ];
-			}
-			if( l > 3 )
-			{
-				Boolean.TryParse( fields[ 3 ], out var b );
-				pi.UseDefaultBranch = b;
-			}
-			return pi;
-		}
-
-
-		private static ProviderInfo Version0( ProviderInfo pi, string[] fields )
-		{
-			var l = fields.Length;
-
-			if( l > 0 )
-			{
-			}
-			if( l > 1 )
-			{
-			}
-			if( l > 2 )
-			{
-			}
-			if( l > 3 )
-			{
-				pi.DefaultBranch = fields[ 3 ];
-			}
-			if( l > 4 )
-			{
-				Boolean.TryParse( fields[ 4 ], out var b );
-				pi.UseDefaultBranch = b;
-			}
-			return pi;
-		}
-#endif
 	}
 }

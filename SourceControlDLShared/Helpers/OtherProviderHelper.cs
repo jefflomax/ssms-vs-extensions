@@ -1,7 +1,7 @@
-﻿using SharedSrc.Helpers;
+﻿#if false
+using SharedSrc.Helpers;
 using SourceControlDeepLinks.Helpers;
 using SourceControlDeepLinks.Options;
-using SourceControlDLSharedNoDep.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -10,7 +10,7 @@ namespace SourceControlDLShared.Helpers
 {
 	public static class OtherProviderHelper
 	{
-#if false
+
 		public static ProviderInfo GetDefault( AppSettingsHelper appSettingsHelper )
 		{
 			var pi = new ProviderInfo();
@@ -60,6 +60,7 @@ namespace SourceControlDLShared.Helpers
 
 			return new ProviderLinkInfo( deepLink, filePathInRepo );
 		}
-#endif
+
 	}
 }
+#endif

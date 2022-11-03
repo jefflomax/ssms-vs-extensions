@@ -13,6 +13,7 @@ using SourceControlDeepLinks.Helpers;
 using SourceControlDeepLinks.Options;
 using static SourceControlDeepLinks.Resources.Constants;
 using Microsoft.VisualStudio.Shell;
+using SourceControlDLShared2.Options;
 
 namespace SourceControlDeepLinks.Options
 {
@@ -29,7 +30,7 @@ namespace SourceControlDeepLinks.Options
 	public class Provider1Options : ProviderBase<Provider1Options>
 	{
 		private readonly bool _debug;
-		private static bool _initChecked = false;
+		//private bool _initChecked = false;
 
 		// The .Instance property in this class is meant to be used
 		// on the UI thread only
@@ -38,11 +39,13 @@ namespace SourceControlDeepLinks.Options
 		{
 			_debug = true;
 
-			if( !_initChecked )
-			{
+			DefaultValueAttributeHelper.InitializeDefaultProperties( this );
+
+			//if( !_initChecked )
+			//{
 				InitFromAppConfig( '1', typeof( Provider1Options ), nameof( Provider1Enabled ) );
-				_initChecked = true;
-			}
+			//	_initChecked = true;
+			//}
 		}
 
 
@@ -97,7 +100,7 @@ namespace SourceControlDeepLinks.Options
 
 		[Category( SourceLink + Options1PageName )]
 		[DisplayName( "Bookmark Format" )]
-		[Description( "Supported bookmarks 1  1,2,3... 1-3 1,3" )]
+		[Description( "Supported bookmarks #L1  #1,2,3... #1-3 #1,3" )]
 		[DefaultValue( BookmarkTypeEnum.All )]
 		[TypeConverter( typeof( EnumConverter ) )]
 		public BookmarkTypeEnum Provider1BookmarksType 
@@ -106,45 +109,6 @@ namespace SourceControlDeepLinks.Options
 			set { BookmarkType = value; }
 		}
 
-#if false
-		protected override IEnumerable<PropertyInfo> GetOptionProperties()
-		{
-			var optionProperties = base.GetOptionProperties().ToList();
-
-			return ForceSettingDictionaryFirst( optionProperties );
-		}
-
-		private IEnumerable<PropertyInfo> ForceSettingDictionaryFirst
-		(
-			List<PropertyInfo> baseProps
-		)
-		{
-			var orderedSettings = baseProps
-				.OrderBy
-				(
-					p =>
-					{
-						switch( p.Name )
-						{
-							case nameof( Provider1Enabled ):
-								return 0;
-							case nameof( Provider1OriginMatch ):
-								return 1;
-							case nameof( Provider1OriginRegex ):
-								return 2;
-							case nameof( Provider1SourceLinkTemplate ):
-								return 3;
-							case nameof( Provider1BookmarksType ):
-								return 4;
-							case nameof( Provider1UseDefaultBranch ):
-								return 5;
-						}
-						return 6;
-					}
-				);
-			return orderedSettings;
-		}
-#endif
 
 		[Conditional( "DEBUG" )]
 		private void Log( string message )

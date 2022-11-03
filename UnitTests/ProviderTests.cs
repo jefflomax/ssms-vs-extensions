@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using NUnit.Framework;
-using SourceControlDLSharedNoDep.Helpers;
+using SourceControlDLShared2.Helpers;
 
 namespace UnitTests
 {

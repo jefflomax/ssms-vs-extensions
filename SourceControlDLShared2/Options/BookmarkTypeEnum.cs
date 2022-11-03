@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace SourceControlDeepLinks.Options
+﻿
+namespace SourceControlDLShared2.Options
 {
 	public enum BookmarkTypeEnum
 	{

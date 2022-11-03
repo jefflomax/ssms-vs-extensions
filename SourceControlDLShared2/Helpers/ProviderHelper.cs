@@ -1,11 +1,11 @@
-﻿using SourceControlDeepLinks.Options;
+﻿using SourceControlDLShared2.Options;
 using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Text.RegularExpressions;
 
 
-namespace SourceControlDLSharedNoDep.Helpers
+namespace SourceControlDLShared2.Helpers
 {
 	public static class ProviderHelper
 	{

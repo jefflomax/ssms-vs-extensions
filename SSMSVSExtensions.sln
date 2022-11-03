@@ -130,6 +130,7 @@ Global
 	EndGlobalSection
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		StringProcessorShared\StringProcessorShared.projitems*{0cd91edb-9df6-4d46-9cbb-1d7bf984a8c1}*SharedItemsImports = 13
+		SourceControlDLShared2\SourceControlDLShared2.projitems*{373dcc21-2ff6-40ca-8108-0dc646ca4553}*SharedItemsImports = 13
 		SourceControlDLShared\SourceControlDLShared.projitems*{373dcc21-2ff6-40ca-8108-0dc646ca4553}*SharedItemsImports = 13
 		SQLPasteShared\SQLPasteShared.projitems*{373ec34a-f4a0-4cb3-80fb-26884bae0fb4}*SharedItemsImports = 13
 		SharedSrc\SharedSrc.projitems*{3c01a506-2c7d-4960-87c0-3cbac57bc1d5}*SharedItemsImports = 13

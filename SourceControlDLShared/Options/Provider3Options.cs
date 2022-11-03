@@ -13,8 +13,9 @@ using SourceControlDeepLinks.Helpers;
 using SourceControlDeepLinks.Options;
 using static SourceControlDeepLinks.Resources.Constants;
 using Microsoft.VisualStudio.Shell;
+using SourceControlDLShared2.Options;
 
-namespace SourceControlDeepLinks
+namespace SourceControlDeepLinks.Options
 {
 	internal partial class OptionsProvider3
 	{
@@ -35,7 +36,7 @@ namespace SourceControlDeepLinks
 		public Provider3Options()
 		{
 			_debug = true;
-			Enabled = false;
+			DefaultValueAttributeHelper.InitializeDefaultProperties( this );
 		}
 
 		[Category( SourceLink + OptionsInfo )]

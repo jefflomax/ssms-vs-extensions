@@ -13,8 +13,9 @@ using SourceControlDeepLinks.Helpers;
 using SourceControlDeepLinks.Options;
 using static SourceControlDeepLinks.Resources.Constants;
 using Microsoft.VisualStudio.Shell;
+using SourceControlDLShared2.Options;
 
-namespace SourceControlDeepLinks
+namespace SourceControlDeepLinks.Options
 {
 	internal partial class OptionsProvider2
 	{
@@ -29,7 +30,7 @@ namespace SourceControlDeepLinks
 	public class Provider2Options : ProviderBase<Provider2Options>
 	{
 		private readonly bool _debug;
-		private static bool _initChecked = false;
+		//private static bool _initChecked = false;
 
 		// The .Instance property in this class is meant to be used
 		// on the UI thread only
@@ -37,11 +38,14 @@ namespace SourceControlDeepLinks
 		public Provider2Options()
 		{
 			_debug = true;
-			if( !_initChecked )
-			{
+
+			DefaultValueAttributeHelper.InitializeDefaultProperties( this );
+
+			//if( !_initChecked )
+			//{
 				InitFromAppConfig( '2', typeof( Provider2Options ), nameof( Provider2Enabled ) );
-				_initChecked = true;
-			}
+			//	_initChecked = true;
+			//}
 		}
 
 		[Category( SourceLink + OptionsInfo )]
@@ -95,7 +99,7 @@ namespace SourceControlDeepLinks
 
 		[Category( SourceLink + Options2PageName )]
 		[DisplayName( "Bookmark Format" )]
-		[Description( "Supported bookmarks 1  1,2,3... 1-3 1,3" )]
+		[Description( "Supported bookmarks #L1  #1,2,3... 1-3 1,3" )]
 		[DefaultValue( BookmarkTypeEnum.All )]
 		[TypeConverter( typeof( EnumConverter ) )]
 		public BookmarkTypeEnum Provider2BookmarksType

@@ -13,6 +13,7 @@ using SharedSrc.Commands;
 using SharedSrc.Helpers;
 using System.ComponentModel.Design;
 using SharedSrc.Interfaces;
+using SourceControlDeepLinks.Options;
 
 namespace SourceControlDeepLinks.Commands
 {

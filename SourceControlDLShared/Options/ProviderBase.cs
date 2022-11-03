@@ -2,6 +2,7 @@
 using Microsoft.VisualStudio.Shell;
 using SharedSrc.Helpers;
 using SourceControlDeepLinks.Helpers;
+using SourceControlDLShared2.Options;
 using System;
 using System.Collections.Generic;
 using System.Text;

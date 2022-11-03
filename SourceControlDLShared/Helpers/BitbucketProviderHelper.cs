@@ -1,13 +1,13 @@
-﻿using System;
+﻿#if false
+using System;
 using SharedSrc.Helpers;
 using SourceControlDeepLinks.Options;
-using SourceControlDLSharedNoDep.Helpers;
 
 namespace SourceControlDeepLinks.Helpers
 {
 	public static class BitbucketProviderHelper
 	{
-#if false
+
 		public static ProviderInfo GetDefault( AppSettingsHelper appSettingsHelper )
 		{
 			var originRegex = appSettingsHelper.GetString( "BitbucketOriginRegex" );
@@ -63,6 +63,7 @@ namespace SourceControlDeepLinks.Helpers
 
 			return new ProviderLinkInfo( deepLink, filePathInRepo );
 		}
-#endif
+
 	}
 }
+#endif
