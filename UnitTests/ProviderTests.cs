@@ -23,7 +23,6 @@ namespace UnitTests
 			var template = @"https://github.com/ profile / repo /blob/ branch / file";
 			var branch = "main";
 			var filePathFragment = @"SourceControlDeepLinksVS2022/VSCommandTable.cs";
-			var lines = "";
 
 			var captures = ProviderHelper.ResolveRegex( originRegex, originUrl );
 
@@ -59,7 +58,6 @@ namespace UnitTests
 			var template = @"https://code. domain /scm/ project /repos/ repo /browse/ file";
 			var branch = "";
 			var filePathFragment = @"TestFolder/Test.cs";
-			var lines = "";
 
 			var captures = ProviderHelper.ResolveRegex( originRegex, originUrl );
 

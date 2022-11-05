@@ -103,22 +103,57 @@ namespace SourceControlDLShared2.Helpers
 			string lines
 		)
 		{
+			if( lines.Length == 0 )
+			{
+				return deepLink;
+			}
+
 			var bookmarks = lines;
+			var iComma = bookmarks.IndexOf( comma );
 			if( bookmarkType == BookmarkTypeEnum.Single )
 			{
-				bookmarks = FirstBookmark( bookmarks );
+				bookmarks = FirstBookmark( bookmarks, iComma, "L" );
 			}
-			return deepLink + bookmarks;
+			else if( bookmarkType == BookmarkTypeEnum.FirstDashLast)
+			{
+				bookmarks = FirstAndLastBookmark( bookmarks, iComma, "L", "-" );
+			}
+			else if( bookmarkType == BookmarkTypeEnum.FirstCommaLast)
+			{
+				bookmarks = FirstAndLastBookmark( bookmarks, iComma, "", "," );
+			}
+			return deepLink + '#' + bookmarks;
 		}
 
-		private static string FirstBookmark( string bookmarks )
+		private const char comma = ',';
+		private static string FirstBookmark
+		(
+			string bookmarks,
+			int iComma,
+			string prefix
+		)
 		{
-			var iComma = bookmarks.IndexOf( ',' );
 			if( iComma == -1 )
 			{
-				return $"#L{bookmarks}";
+				return $"{prefix}{bookmarks}";
 			}
-			return $"#L{bookmarks.Substring( 0, iComma )}";
+			return $"{prefix}{bookmarks.Substring( 0, iComma )}";
+		}
+
+		private static string FirstAndLastBookmark
+		(
+			string bookmarks,
+			int iComma,
+			string prefix,
+			string delimiter
+		)
+		{
+			if( iComma == -1 )
+			{
+				return FirstBookmark( bookmarks, iComma, prefix );
+			}
+			var iLastComma = bookmarks.LastIndexOf( comma );
+			return $"{FirstBookmark(bookmarks, iComma, prefix )}{delimiter}{prefix}{bookmarks.Substring(iLastComma + 1)}";
 		}
 	}
 }

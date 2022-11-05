@@ -33,7 +33,6 @@ namespace SourceControlDeepLinks.Commands
 			var allOptions = await package.GetLiveOptionsInstanceAsync();
 			var generalOptions = allOptions.General;
 
-			//var state = package.GetOptionsState();
 			var nl = Environment.NewLine;
 			var sbDiagnostics = new StringBuilder();
 
@@ -44,8 +43,6 @@ namespace SourceControlDeepLinks.Commands
 			// ASPX files
 
 			var activeFilePath = await GetActiveFilePathAsync( sbDiagnostics );
-
-			//await GetSolutionFolderAsync();
 
 			if( string.IsNullOrEmpty( activeFilePath ) )
 			{
@@ -74,9 +71,30 @@ namespace SourceControlDeepLinks.Commands
 			}
 
 			var remoteOrigin = await gitHelper.GetRemoteOriginUrlAsync( workingDirectory );
+			if( string.IsNullOrEmpty( remoteOrigin ) )
+			{
+				await package.ToOutputPaneAsync
+				(
+					$"No Origin Url found, check your \".git/config\" file{nl}" +
+					$"for a [remote \"origin\"] url{nl}"
+				);
+				return;
+			}
+
 			var currentBranch = await gitHelper.GetCurrentBranchAsync( workingDirectory );
 
-			var providerInfo = allOptions.GetMatchingProvider( remoteOrigin );
+			var providerInfo = allOptions.GetMatchingProvider( remoteOrigin, sbDiagnostics );
+			if( providerInfo == null )
+			{
+				await package.ToOutputPaneAsync
+				( 
+					$"No matching provider found, in Tools, Options, {OptionsPageCategoryName}{nl}" +
+					$"check the expected provider is enabled, and check that{nl}" +
+					$"it's 'Origin Match' is a string that matches the remote origin url:{nl}" +
+					sbDiagnostics.ToString()
+				);
+				return;
+			}
 
 			var bookmarkedLines = e.InValue as string;
 			var providerHelper = new ProviderFactory();
