@@ -7,14 +7,14 @@
         <Icon>Resources\Icon.png</Icon>
         <PreviewImage>Resources\Icon.png</PreviewImage>
     </Metadata>
-    <Installation>
-        <InstallationTarget Id="ssms" Version="[14.0, 18.99)" />
-        <InstallationTarget Version="[14.0,15.0)" Id="Microsoft.VisualStudio.IntegratedShell" />
+    <Installation AllUsers="true">
+        <InstallationTarget Id="ssms" Version="[14.0,15.9)" />
+        <InstallationTarget Version="[14.0,15.9)" Id="Microsoft.VisualStudio.IntegratedShell" />
         <InstallationTarget Id="Microsoft.VisualStudio.Community" Version="[16.0, 17.0)" />
         <InstallationTarget Version="[16.0,17.0)" Id="Microsoft.VisualStudio.Pro" />
     </Installation>
     <Prerequisites>
-        <Prerequisite Id="Microsoft.VisualStudio.Component.CoreEditor" Version="[16.0,)" DisplayName="Visual Studio core editor" />
+        <Prerequisite Id="Microsoft.VisualStudio.Component.CoreEditor" Version="[14.0,16.9)" DisplayName="Visual Studio core editor" />
     </Prerequisites>
     <Assets>
         <Asset Type="Microsoft.VisualStudio.VsPackage" d:Source="Project" d:ProjectName="%CurrentProject%" Path="|%CurrentProject%;PkgdefProjectOutputGroup|" />
