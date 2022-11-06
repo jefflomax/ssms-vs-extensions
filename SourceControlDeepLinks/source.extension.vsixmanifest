@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
     <Metadata>
-        <Identity Id="SourceControlDeepLinks.1eab7686-ed75-494e-8a2d-cfd4d2da1477" Version="0.8.7" Language="en-US" Publisher="Jeff Lomax" />
+        <Identity Id="SourceControlDeepLinks.1eab7686-ed75-494e-8a2d-cfd4d2da1477" Version="0.9.0" Language="en-US" Publisher="Jeff Lomax" />
         <DisplayName>SourceControlDeepLinks</DisplayName>
         <Description xml:space="preserve">VSIX Source Control Deep Links Extension</Description>
         <Icon>Resources\Icon.png</Icon>
