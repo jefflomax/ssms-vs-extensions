@@ -42,13 +42,10 @@ namespace SourceControlDeepLinks
 			await this.RegisterCommandsAsync();
 			this.RegisterToolWindows();
 
-			// TODO: Switch pattern to Migrate settings from app.config
-			// on first launch
 
 			_extensionOutputPaneName = ExtensionOutputPane;
-			_state = new ExtensionOptions();
 
-			await GetOptionsFromVSSettingsAsync();
+			await GetOptionsFromVSSettingsAsync(); // sets _state
 
 			await LogStartupInformationAsync( ExtensionOutputPane, Vsix.Version );
 

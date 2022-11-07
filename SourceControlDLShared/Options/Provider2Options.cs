@@ -49,29 +49,29 @@ namespace SourceControlDeepLinks.Options
 		}
 
 		[Category( SourceLink + OptionsInfo )]
-		[DisplayName( "Enabled" )]
-		[Description( "Enable/Disable provider" )]
+		[DisplayName( PEnabled )]
+		[Description( PEnabledDesc )]
 		[DefaultValue( true )]
 		public bool Provider2Enabled { get { return Enabled; } set { Enabled = value; } }
 
 		[Category( SourceLink + OptionsInfo )]
-		[DisplayName( "Friendly Name" )]
-		[Description( "Provider Name (optional)" )]
+		[DisplayName( PFriendly )]
+		[Description( PFriendlyDesc )]
 		public string ProviderFriendlyName { get { return FriendlyName; } set { FriendlyName = value; } }
 
 		[Category( SourceLink + Options2PageName )]
-		[DisplayName( "Origin Match" )]
-		[Description( "Determines if this provider is used" )]
+		[DisplayName( POriginMatch )]
+		[Description( POriginMatchDesc )]
 		public string Provider2OriginMatch { get { return OriginMatch; } set { OriginMatch = value; } }
 
 		[Category( SourceLink + Options2PageName )]
-		[DisplayName( "Origin Regex" )]
-		[Description( "Extract named captures like domain, profile, repo, from origin URL to insert in Source Link Template" )]
+		[DisplayName( POriginRegex )]
+		[Description( POriginRegexDesc )]
 		public string Provider2OriginRegex { get { return OriginRegex; } set { OriginRegex = value; } }
 
 		[Category( SourceLink + Options2PageName )]
-		[DisplayName( "Source Link Template" )]
-		[Description( "URL template to source, space delimit ' file ' ' branch ' and capture name" )]
+		[DisplayName( PSourceLinkTemplate )]
+		[Description( PSourceLinkTemplateDesc )]
 		public string Provider2SourceLinkTemplate
 		{
 			get { return SourceLinkTemplate; }
@@ -79,8 +79,8 @@ namespace SourceControlDeepLinks.Options
 		}
 
 		[Category( SourceLink + Options2PageName )]
-		[DisplayName( "Default Branch" )]
-		[Description( "Default branch (main, master, develop...)" )]
+		[DisplayName( PDefaultBranch )]
+		[Description( PDefaultBranchDesc )]
 		public string Provider2DefaultBranch
 		{
 			get { return DefaultBranch; }
@@ -88,8 +88,8 @@ namespace SourceControlDeepLinks.Options
 		}
 
 		[Category( SourceLink + Options2PageName )]
-		[DisplayName( "Use Default Branch" )]
-		[Description( "Use default instead of current branch" )]
+		[DisplayName( PUseDefaultBranch )]
+		[Description( PUseDefaultBranchDesc )]
 		[DefaultValue(false)]
 		public bool Provider2UseDefaultBranch
 		{
@@ -98,8 +98,8 @@ namespace SourceControlDeepLinks.Options
 		}
 
 		[Category( SourceLink + Options2PageName )]
-		[DisplayName( "Bookmark Format" )]
-		[Description( "Supported bookmarks #L1  #1,2,3... 1-3 1,3" )]
+		[DisplayName( PBookmarkType )]
+		[Description( PBookmarkTypeDesc )]
 		[DefaultValue( BookmarkTypeEnum.All )]
 		[TypeConverter( typeof( EnumConverter ) )]
 		public BookmarkTypeEnum Provider2BookmarksType

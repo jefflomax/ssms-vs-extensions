@@ -45,7 +45,7 @@ namespace SourceControlDeepLinks.Helpers
 
 			var allLines = string.IsNullOrEmpty( bookmarkedLines )
 				? string.Empty
-				: $"#{bookmarkedLines}";
+				: bookmarkedLines;
 
 			// Build the Bitbucket Deep Link Source URL
 			var deepLink = ProviderHelper.TranslateUrl

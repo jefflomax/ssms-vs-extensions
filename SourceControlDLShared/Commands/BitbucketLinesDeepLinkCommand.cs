@@ -35,9 +35,7 @@ namespace SourceControlDeepLinks.Commands
 			var dte = await DteHelper.GetDTEAsync();
 
 			var insertLine = false;
-			//var textDocument = dte.ActiveDocument.Object( "TextDocument" ) as TextDocument;
-			//var selection = textDocument.Selection;
-			//selection.StartOfDocument();
+
 			var textDocument = await dte.ActiveDocument.GetTextDocumentAsync();
 			var selection = await textDocument.GetSelectionAsync();
 
@@ -61,7 +59,11 @@ namespace SourceControlDeepLinks.Commands
 			var bookmarkLinesStr = string.Join( ",", bookmarkLines );
 
 			// Get our sibling command
-			var commandId = new CommandID(PackageGuids.SourceControlDeepLinks, PackageIds.BitbucketDeepLinkCommand);
+			var commandId = new CommandID
+			(
+				PackageGuids.SourceControlDeepLinks,
+				PackageIds.BitbucketDeepLinkCommand
+			);
 			await VS.Commands.ExecuteAsync(commandId, bookmarkLinesStr);
 		}
 	}

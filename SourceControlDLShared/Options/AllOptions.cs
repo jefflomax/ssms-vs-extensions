@@ -28,7 +28,11 @@ namespace SourceControlDeepLinks.Options
 			Provider3 = p3;
 		}
 
-		public ProviderInfo GetMatchingProvider( string originUrl )
+		public ProviderInfo GetMatchingProvider
+		(
+			string originUrl,
+			StringBuilder sbDiagnostics
+		)
 		{
 			bool ProviderMatch<T>
 			(
@@ -43,6 +47,7 @@ namespace SourceControlDeepLinks.Options
 				}
 				if( !provider.Enabled )
 				{
+					sbDiagnostics.AppendLine( $"{provider.FriendlyName} not enabled" );
 					return false;
 				}
 				var regex = new Regex( provider.OriginMatch );
@@ -57,6 +62,13 @@ namespace SourceControlDeepLinks.Options
 						provider.DefaultBranch,
 						provider.UseDefaultBranch,
 						provider.BookmarkType
+					);
+				}
+				else
+				{
+					sbDiagnostics.AppendLine
+					(
+						$"{provider.FriendlyName} '{provider.OriginMatch}' did not match '{originUrl}'"
 					);
 				}
 				return match;

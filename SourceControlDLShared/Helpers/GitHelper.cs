@@ -49,7 +49,7 @@ namespace SourceControlDeepLinks.Helpers
 			}
 
 			var gitRoot = GetGitFolder( workingDirectory );
-			if(gitRoot == null)
+			if( gitRoot == null )
 			{
 				return string.Empty;
 			}

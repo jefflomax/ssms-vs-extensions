@@ -31,7 +31,6 @@ namespace SourceControlDeepLinks.Options
 	public class ExtensionOptions
 		: BaseOptionModel<ExtensionOptions>, IExtensionOptions
 	{
-		// private static int _priorProvider = 0;
 		private readonly bool _debug;
 
 		// The .Instance property in this class is meant to be used
@@ -83,6 +82,11 @@ namespace SourceControlDeepLinks.Options
 		[DisplayName("Clipboard")]
 		[Description("Place URL in clipboard")]
 		public bool OutputToClipboard { get; set; } = true;
+
+		[Category( "Project Details" )]
+		[DisplayName( SourceLink + "©2022 Jeff Lomax" )]
+		[Description( "Source Control Deep Links is open source with the Apache License 2.0" )]
+		public string ProjectInfo { get; } = "https://github.com/jefflomax/ssms-vs-extensions/tree/main/SourceControlDeepLinksVS2022";
 
 
 		public override string ToString()
