@@ -24,17 +24,17 @@ Each GIT repository contains a ".git" folder with a config file.  The extension 
 To check if this provider is the one that should be used, the Enabled flag, then the text in "Origin Match" is checked against this origin URL, example:
 github.com
 
-In order to form the URL to your online source control, whatever values you need are extracted from the origin URL, using named capture groups.  In this example, the "Origin Regex" is:  
+In order to form the URL to your online source control, extract whatever values you need from the origin URL, using **named capture groups**.  In this example, the "Origin Regex" is:  
 ^.\*//github\.com/(?\<**profile**>[\w.]*)/(?\<**repo**>[\w-.]*)\.git  
-In RegEx, ?\<**captureGroupName**> defines the name
+( In RegEx, ?\<**captureGroupName**> defines the name, profile & repo above )
 
-This capture the two named groups:  
+This captures the two named groups:  
 profile = jefflomax  
 repo = ssms-vs-extensions
 
 The extension provides two additional values:  
-branch = the current branch name, e.g. main, develop, etc.  
-file = the current source file path within the repo
+**branch** = the current branch name, e.g. main, develop, etc.  
+**file** = the current source file path within the repo
 
 The above items are substituted into the "Source Link Template" which is simply a space delimited URL, in this example:  
 https://github.com/ profile / repo /blob/ branch / file
