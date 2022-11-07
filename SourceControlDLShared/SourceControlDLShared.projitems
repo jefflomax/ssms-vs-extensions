@@ -12,10 +12,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Commands\BitbucketDeepLinkCommand.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Commands\BitbucketLinesDeepLinkCommand.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Commands\DeepLinkFormatDynamicCommand.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Helpers\BitbucketProviderHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\GitHelper.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Helpers\GithubProviderHelper.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Helpers\OtherProviderHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\ProviderFactory.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\ProviderLinkInfo.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\SettingsHelper.cs" />
