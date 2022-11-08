@@ -9,7 +9,7 @@ Get a deep link to your source control, optionally include bookmarked lines tagg
 ![Tools, Source Control Deep Links](/images/DeepLinksToolsMenu.png?raw=true)
 
 ### Tools, Options, Source Control Deep Links, General 
-![Tools, Options, Source Control Deep Links, General](/images/DeepLinksGeneral.png?raw=true)
+![Tools, Options, Source Control Deep Links, General](https://github.com/jefflomax/ssms-vs-extensions/blob/main/images/DeepLinksGeneral.png?raw=true)
 
 ### Tools, Options, Source Control Deep Links, Provider 1
 Example configuration for Github
