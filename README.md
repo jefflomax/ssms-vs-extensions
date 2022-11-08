@@ -6,14 +6,14 @@ SSMS 18.x and Visual Studio 2019/2022 extensions
 Get a deep link to your source control, optionally include bookmarked lines tagged
 
 ### Tools, Source Control Deep Links flyout menu
-![Tools, Source Control Deep Links](/images/DeepLinksToolsMenu.png?raw=true)
+![Tools, Source Control Deep Links](./images/DeepLinksToolsMenu.png)
 
 ### Tools, Options, Source Control Deep Links, General 
-![Tools, Options, Source Control Deep Links, General](https://github.com/jefflomax/ssms-vs-extensions/blob/main/images/DeepLinksGeneral.png?raw=true)
+![Tools, Options, Source Control Deep Links, General](./images/DeepLinksGeneral.png)
 
 ### Tools, Options, Source Control Deep Links, Provider 1
 Example configuration for Github
-![Tools, Options, Source Control Deep Links, Provider 1](/images/DeepLinksProvider1.png?raw=true)
+![Tools, Options, Source Control Deep Links, Provider 1](./images/DeepLinksProvider1.png)
 
 #### How the configuration works
 Each GIT repository contains a ".git" folder with a config file.  The extension retrieves the remote origin URL, example:
@@ -46,7 +46,7 @@ https://github.com/jefflomax/ssms-vs-extensions/blob/main/SourceControlDLShared/
 
 ### Tools, Options, Source Control Deep Links, Provider 2
 Example configuration for Bitbucket Server
-![Tools, Options, Source Control Deep Links, Provider 2](/images/DeepLinksProvider2.png?raw=true)
+![Tools, Options, Source Control Deep Links, Provider 2](./images/DeepLinksProvider2.png)
 
 
 # SQL Paste
