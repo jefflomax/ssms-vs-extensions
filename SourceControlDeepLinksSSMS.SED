@@ -1,0 +1,32 @@
+[Version]
+Class=IExpress
+SEDVersion=3
+[Options]
+PackagePurpose=ExtractOnly
+ShowInstallProgramWindow=0
+HideExtractAnimation=0
+UseLongFileName=1
+InsideCompressed=0
+CAB_FixedSize=0
+CAB_ResvCodeSigning=0
+RebootMode=I
+InstallPrompt=%InstallPrompt%
+DisplayLicense=%DisplayLicense%
+FinishMessage=%FinishMessage%
+TargetName=%TargetName%
+FriendlyName=%FriendlyName%
+AppLaunched=%AppLaunched%
+PostInstallCmd=%PostInstallCmd%
+AdminQuietInstCmd=%AdminQuietInstCmd%
+UserQuietInstCmd=%UserQuietInstCmd%
+SourceFiles=SourceFiles
+[Strings]
+InstallPrompt=Extract to C:\Program Files (x86)\Microsoft SQL Server Management Studio 18\Common7\IDE\Extensions\SourceControlDeepLinks
+DisplayLicense=
+FinishMessage=Be sure to restart SSMS
+TargetName=C:\programs\vs2019\ssms-vs-extensions\SourceControlDeepLinksSSMS.exe
+FriendlyName=SourceControlDeepLinksSSMS
+AppLaunched=
+PostInstallCmd=
+AdminQuietInstCmd=
+UserQuietInstCmd=
